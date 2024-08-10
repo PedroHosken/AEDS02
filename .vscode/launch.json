@@ -2,6 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "Pali",
+      "request": "launch",
+      "mainClass": "Verde.Exercícios.Pali",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
