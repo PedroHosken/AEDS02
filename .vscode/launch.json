@@ -3,6 +3,27 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Cesar",
+      "request": "launch",
+      "mainClass": "Verde.TP01.Q03.Cesar",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
+      "name": "Ciframento",
+      "request": "launch",
+      "mainClass": "Verde.TP01.Q03.Ciframento",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
+      "name": "Pali",
+      "request": "launch",
+      "mainClass": "Verde.TP01.Pali",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
       "name": "Pali",
       "request": "launch",
       "mainClass": "Verde.Exercícios.Pali",
