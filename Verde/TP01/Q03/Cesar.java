@@ -1,6 +1,5 @@
 package Verde.TP01.Q03;
-
-//import java.util.*;
+//package Verde.TP01.Q03;
 
 public class Cesar {
 
@@ -29,7 +28,7 @@ public class Cesar {
     }
     // montar nova string
     nova = sb.toString();
-    System.out.println(nova);
+    MyIO.println(nova);
     // retornar
     return nova;
   }
@@ -43,6 +42,7 @@ public class Cesar {
     do {
       // palavra = scanner.nextLine();
       palavra = MyIO.readLine();
+      MyIO.println();
       if (!palavra.equals("FIM")) {
         cesar(palavra);
       }
