@@ -1,0 +1,38 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Arq",
+      "request": "launch",
+      "mainClass": "Verde.TP01.Q08.Arq",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
+      "name": "Is",
+      "request": "launch",
+      "mainClass": "Verde.TP01.Q06.Is",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "c:/Users/User11/Documents/AEDS02/Lab/Lab02",
+      "program": "c:/Users/User11/Documents/AEDS02/Lab/Lab02/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}

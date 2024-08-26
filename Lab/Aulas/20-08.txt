@@ -1,0 +1,6 @@
+Nessa aula estamos discutindo sobre o tratamento de exceção.
+Pesquisar diagrama de tratamento de exceçÃO E ANALISAR
+Metódos:
+
+try{} catch(){}// Mais comum e bem utilizado, principalmente no Scanner, tem que ser utilizado.
+Melhor utilizar o MyIO.
