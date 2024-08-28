@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "CesarRecu",
+      "request": "launch",
+      "mainClass": "Verde.TP01.Q12.CesarRecu",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
       "name": "pali_recu",
       "request": "launch",
       "mainClass": "Verde.TP01.Q10.pali_recu",
