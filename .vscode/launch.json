@@ -3,6 +3,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "pali_recu",
+      "request": "launch",
+      "mainClass": "Verde.TP01.Q10.pali_recu",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
+      "name": "Principal",
+      "request": "launch",
+      "mainClass": "Lab.Aulas.Atividades.Classes.Principal",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
       "name": "Arq",
       "request": "launch",
       "mainClass": "Verde.TP01.Q08.Arq",

@@ -1,0 +1,3 @@
+Hoje estamos aprendendo sobre herança e polimorfismo.
+Herança é a capacidade de uma classe distribuir seus atributos e metódos entre outras classes.
+Polimorfismo é a capacidade de ter comportamentos conforme quem chama.
