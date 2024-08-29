@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "IsRec",
+      "request": "launch",
+      "mainClass": "Verde.TP01.Q15.IsRec",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
       "name": "CesarRecu",
       "request": "launch",
       "mainClass": "Verde.TP01.Q12.CesarRecu",
