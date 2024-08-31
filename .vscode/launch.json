@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Parenteses",
+      "request": "launch",
+      "mainClass": "Lab.Lab03.Parenteses",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
       "name": "Boolean",
       "request": "launch",
       "mainClass": "Verde.TP01.Q05.Boolean",
