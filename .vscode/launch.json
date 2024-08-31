@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Boolean",
+      "request": "launch",
+      "mainClass": "Verde.TP01.Q05.Boolean",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
       "name": "IsRec",
       "request": "launch",
       "mainClass": "Verde.TP01.Q15.IsRec",

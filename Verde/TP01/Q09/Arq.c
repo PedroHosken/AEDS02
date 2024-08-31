@@ -1,72 +1,107 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <locale.h> // location specific settings
+/*
+ *  -------------------------- Documentacao
+ *  Pontificia Universidade Catolica de Minas Gerais
+ *  Curso de Ciencia da Computacao
+ *  Algoritmos e Estruturas de Dados II
+ *   
+ *  TP01Q09 - 31 / 08 / 2024
+ *  Author: Pedro Hosken Fernandes Guimarães
+ *   
+ *  Para compilar em terminal (janela de comandos):
+ *       Linux : gcc -o Arquivo Arquivo.c
+ *       Windows: gcc -o Arquivo Arquivo.c
+ *   
+ *  Para executar em terminal (janela de comandos):
+ *       Linux : ./Arquivo
+ *       Windows: Arquivo
+ *   
+*/
 
-// metodo de ler e do arquivo e printar na tela
-void printar(FILE *file, int n)
+// ---------------------------------------- Dependencias
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>  // location specific settings
+
+// ---------------------------------------- Metodos
+
+/**
+ *  Funcao para formatar um numero real e printar para o Verde.
+ *  Logica: Converter de double para char e manipular os caracteres. Se for '0' substituir por '\0' e se for '.' o
+ *  numero e' inteiro, entao tirar o '.' tambem.
+ *  @param input - double: Numero real a ser formatado.
+*/
+void formattedDouble( double input )
 {
-    // definir dados
-    double receive = 0.0;
-    char numero[80];
-    double numeros[n];
-    char *aux;
-    // ler iterativamente do fim para o iniicio
-    fseek(file, 0, SEEK_END);
-    long pos = ftell(file);
-    for (long i = pos - 1; i >= 0; i = i - 1)
+    char *buffer = (char*) malloc( (80+1) * sizeof( char ) ); 
+    sprintf( buffer, "%.10lf", input );
+    int length = strlen( buffer );
+    while( length > 0 && ( buffer[length-1] == '0' || buffer[length-1] == '.' ) )
     {
-        fseek(file, i, SEEK_SET);
-        fscanf(file, "%s", numero);
-        receive = strtod(numero, &aux);
-        printf("%lf\n",receive);
+        if( buffer[length-1] == '.' )
+        {
+            buffer[length-1] = '\0';
+            length = 0;
+        } // end if
+        buffer[length-1] = '\0'; 
+        length = length - 1;
+    } // end while
+    printf( "%s\n", buffer );
+} // end formatDouble ( )
+
+/**
+ *  Funcao para escrever numero real no arquivo.
+ *  @param n - int: Quantidade de numeros a serem escritos.
+ *  @param filename - char*: Nome do arquivo.
+*/
+void writeDoubleToFile( int n, char* filename )
+{
+    FILE *file = fopen( filename, "w+b" );
+    for( int x = 0; x < n; x = x + 1 )
+    {
+        double input = 0.0;
+        scanf( "%lf", &input );
+        fwrite( &input, sizeof(double), 1, file );
     }
-}
-// metodo de leitura de reais e guardar em arquivo
-void ler(FILE *file, int n)
+    fclose( file );
+} // end writeDoubleToFile ( )
+
+/**
+ *  Funcao para ler numero real do arquivo.
+ *  @param n - int: Quantidade de numeros no arquivo.
+ *  @param filename - char*: Nome do arquivo.
+*/
+void readDoubleFromFile( int n, char* filename )
 {
-    // definir dados
-    double input = 0.0;
-    char aux[80];
-    // ler iterativamente e guardar em arquivo
-    if (file == NULL)
+    FILE *file = fopen( filename, "rb" );
+    double value = 0.0;
+    if( file == NULL )
     {
-        printf("FALHA AO ABRIR\n");
+        printf( "\n%s\n", "ERRO: Nao foi possivel abrir o arquivo" );
     }
     else
     {
-        for (int x = 0; x < n; x = x + 1)
+        for( int pointer = 0; pointer < n; pointer = pointer + 1 )
         {
-            scanf("%lf", &input);
-            sprintf(aux, "%f", input);
-            // printf("%s", aux);
-            fprintf(file, "%s\n", aux);
-        }
-    }
-}
+            fseek( file, (n - pointer - 1) * sizeof(double) , SEEK_SET);
+            fread( &value, sizeof(double), 1 ,file );
+            formattedDouble( value );
+        } // end for
+    } // end if
+    fclose( file );
+} // end readDoubleFromFile ( )
 
-// metodo de ler inteiro e chamar outras funções
-void start(FILE *file)
+int main ( int argc, char* argv[] )
 {
-    // definir dados
-    int x = 0;
-    // ler do teclado e chamr outras funções
-    scanf("%d", &x);
-    getchar();
-    ler(file, x);
-    printar(file, x);
-}
+    setlocale( LC_NUMERIC, "en_US.UTF-8" );
 
-// metodo main
-int main()
-{
-    // definir dados
-    FILE *file = fopen("reais2.txt", "w+");
-    setlocale(LC_NUMERIC, "en_US.UTF-8");
-    // começar metódos
-    start(file);
-    // fechar arquivo
-    fclose(file);
-    // retornar
-    return 0;
-}
+    int   n        = 0;
+    char *filename = "reais2.txt";
+
+    scanf( "%d", &n );
+    
+    writeDoubleToFile( n, filename );
+
+    readDoubleFromFile( n, filename );
+} // end main ( )
