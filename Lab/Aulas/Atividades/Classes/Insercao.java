@@ -24,6 +24,13 @@ package Lab.Aulas.Atividades.Classes;
       super(tamanho);
    }
 
+   /**
+	 * Pesquisa Binária
+	 * @param int array, int chave, int esq, int dir
+	 */
+   public int PesqBin(int tamanho){
+      super(tamanho);
+   }
 
 	/**
 	 * Algoritmo de ordenacao por insercao.

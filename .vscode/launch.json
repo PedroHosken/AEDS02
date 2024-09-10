@@ -3,6 +3,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Palindromo",
+      "request": "launch",
+      "mainClass": "Palindromo",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
+      "name": "PrincipalLista",
+      "request": "launch",
+      "mainClass": "PrincipalLista",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
       "name": "Sort",
       "request": "launch",
       "mainClass": "Lab.Lab04.Sort",

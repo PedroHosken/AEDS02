@@ -1,0 +1,1 @@
+Nessa Unidade Estudamos TADS lineares: Lista, Fila e Pilha
