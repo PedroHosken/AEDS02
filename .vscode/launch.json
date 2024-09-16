@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Sinuca",
+      "request": "launch",
+      "mainClass": "Verde.Exercícios.Sinuca",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
       "name": "Espelho",
       "request": "launch",
       "mainClass": "Lab.Lab02.Espelho",
