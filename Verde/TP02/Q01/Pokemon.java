@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 // ----------- Dependências --------- //
 import java.util.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class Pokemon {
     /**
@@ -311,37 +312,49 @@ public class Pokemon {
         Pokemon novo = null;
         String linha = "";
         BufferedReader br = null;
-        String path = "C:/Users/User11/Documents/AEDS02/Verde/TP02/Q01/pokemon.csv";
+        String path = "C:/Users/User11/Documents/AEDS02/Verde/TP02/Q01/pokemon.csv"; // certifique-se de que este
+                                                                                     // caminho esteja correto
         boolean found = false;
-        // teste para se conseguiu abrir o arquivo
+
         try {
-            br = new BufferedReader(new FileReader(path));
-            br.readLine(); // pular primeira linha do arquivo
+            // Abrir o arquivo CSV com a codificação UTF-8
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(path), StandardCharsets.UTF_8));
+            br.readLine(); // pular a primeira linha do arquivo (cabeçalho)
+
             // continuar lendo enquanto não encontrar o id
             while ((linha = br.readLine()) != null && !found) {
-                String[] dados = linha.split(",");// separa os atributos pela ,
-                int idArquivo = Integer.parseInt(dados[0]);// inicializa váriavel com o id de cada linha
-                if (idArquivo == id) {
-                    found = true;
-                    // Remover os colchetes e as aspas simples, depois dividir por vírgula
-                    String habilidadesLimpa = dados[6].replace("[", "").replace("]", "").replace("'", "").trim();
-                    List<String> abilities = Arrays.asList(habilidadesLimpa.split(","));
-                    // inicializar novo pokemon
-                    novo = new Pokemon(idArquivo,
-                            Integer.parseInt(dados[1]), // generation
-                            dados[2], // name
-                            dados[3], // description
-                            dados[4], // type1
-                            dados[5].isEmpty() ? null : dados[5], // type2
-                            abilities,
-                            Double.parseDouble(dados[7]), // weight_kg
-                            Double.parseDouble(dados[8]), // height_m
-                            Integer.parseInt(dados[9]), // capture_rate
-                            Boolean.parseBoolean(dados[10]), // is_legendary
-                            new SimpleDateFormat("dd/MM/yyyy").parse(dados[11]) // capture_date
-                    );
-                }
+                // Dividir a linha manualmente para evitar confusões com habilidades
+                String[] dados = linha.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
+                if (!dados[0].isEmpty()) {
+                    int idArquivo = Integer.parseInt(dados[0]); // inicializa variável com o id de cada linha
+
+                    if (idArquivo == id) {
+                        found = true;
+
+                        // Corrigir o campo de habilidades (remover colchetes e aspas duplas)
+                        String habilidadesLimpa = dados[6].replace("[", "").replace("]", "").replace("\"", "").trim();
+                        List<String> abilities = Arrays.asList(habilidadesLimpa.split(", ")); // Agora vai tratar
+                                                                                              // corretamente
+
+                        // Inicializar novo Pokémon
+                        // Verificar se o campo de peso e altura não estão vazios antes de converter
+                        double weight = !dados[7].isEmpty() ? Double.parseDouble(dados[7]) : 0.0;
+                        double height = !dados[8].isEmpty() ? Double.parseDouble(dados[8]) : 0.0;
+                        int captureRate = !dados[9].isEmpty() ? Integer.parseInt(dados[9]) : 0;
+                        boolean isLegendary = dados[10].equals("1"); // Tratar 0 e 1 para isLegendary
+
+                        // Converter a data
+                        Date captureDate = null;
+                        if (!dados[11].isEmpty()) {
+                            captureDate = new SimpleDateFormat("dd/MM/yyyy").parse(dados[11]);
+                        }
+
+                        novo = new Pokemon(idArquivo, Integer.parseInt(dados[1]), dados[2], dados[3], dados[4],
+                                dados[5].isEmpty() ? null : dados[5], abilities,
+                                weight, height, captureRate, isLegendary, captureDate);
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -353,7 +366,7 @@ public class Pokemon {
                 ex.printStackTrace();
             }
         }
-        // return
+
         return novo;
     }
 
@@ -374,7 +387,7 @@ public class Pokemon {
 
         // Verificar se encontrou o Pokémon e imprimir as informações
         if (resultado != null) {
-            System.out.println(resultado.imprimir());
+            MyIO.println(resultado.imprimir());
         } else {
             System.out.println("Pokémon com ID 115 não encontrado.");
         }
