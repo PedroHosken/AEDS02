@@ -1,5 +1,7 @@
 package Verde.TP02.Q01;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Classe Pokemon
  * @author Pedro Hosken - 816561
@@ -239,6 +241,98 @@ public class Pokemon {
 
     /**
      * Metódo de Clone
-     * Clonar Personagem
+     * Criar novo objeto com os mesmos atributos, receber atributos
+     * 
+     * @var Pokemon clone
+     * @return clone
+     * 
      */
+
+    public Pokemon clone() {
+        // definir dados
+        Pokemon clone = new Pokemon();
+        // receber dados do outro pokemon
+        clone.setId(this.id);
+        clone.setGeneration(this.generation);
+        clone.setName(this.name);
+        clone.setDescription(this.description);
+        clone.setType1(this.type1);
+        clone.setType2(this.type2);
+        clone.setAbilities(new ArrayList<>(this.abilities));
+        clone.setWeight(this.weight);
+        clone.setHeight(this.height);
+        clone.setCaptureRate(this.captureRate);
+        clone.setLegendary(this.isLegendary);
+        clone.setCaptureDate(this.captureDate);
+        // return
+        return clone;
+
+    }
+
+    /**
+     * Metódo de Imprimir
+     * O metodo imprimir mostra os atributos do registro (ver cada linha da saída
+     * padrão)
+     * [#181 -> Ampharos: Light Pokémon - ['electric'] - ['Static', 'Plus'] - 61.5kg
+     * - 1.4m - 45% - false - 2 gen] - 25/05/1999
+     * 
+     * @return String
+     */
+
+    public String imprimir() {
+        return "[#" + id + " -> " + name + ":" + description + " - ['" + type1
+                + (type2 != null ? "', '" + type2 : "']") + " - ['" + String.join("', '", abilities) + "']" + " - "
+                + weight + "kg - " + height + "m - " + captureRate + "% - "
+                + (isLegendary ? "false" : "true") + " - " + generation + " gen] - "
+                + new SimpleDateFormat("dd/MM/yyyy").format(captureDate);
+
+    }
+
+    /**
+     * Metódo Main
+     * Ler arquivo do csv os ids, gerar lista de Pokemons e printar na tela a lista
+     * 
+     * @version 1 - teste de metódo printar e dos construtores CERTO
+     * 
+     * 
+     */
+
+    public static void main(String args[]) {
+        // definir dados
+
+    }
+
+    /**
+     * Testes realizados
+     * Colocar por versões e o que está sendo testado
+     */
+
+    /*
+     * VERSÃO 1 - CONSTRUTORES E PRINTAR
+     * // Criar lista de habilidades
+     * List<String> abilities = new ArrayList<>(Arrays.asList("Static", "Plus"));
+     * 
+     * // Definir data de captura
+     * Date captureDate = new Date(); // Usa a data atual, você pode definir outra
+     * data se preferir.
+     * 
+     * // Criar instância do Pokemon com o construtor parametrizado
+     * Pokemon ampharos = new Pokemon(
+     * 181, // id
+     * 2, // generation
+     * "Ampharos", // name
+     * "Light Pokémon", // description
+     * "electric", // type1
+     * null, // type2 (null)
+     * abilities, // abilities
+     * 61.5, // weight
+     * 1.4, // height
+     * 45, // captureRate
+     * false, // isLegendary
+     * captureDate // captureDate
+     * );
+     * 
+     * System.out.println(ampharos.imprimir());
+     */
+
 }
