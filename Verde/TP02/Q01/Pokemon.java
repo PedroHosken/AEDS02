@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 
 // ----------- Dependências --------- //
 import java.util.*;
+import java.io.*;
 
 public class Pokemon {
     /**
@@ -289,16 +290,94 @@ public class Pokemon {
     }
 
     /**
+     * Metódo de Leitura
+     * Objetivo: a partir do id, ler arquivo csv em busca desse id, criar um novo
+     * objeto pokemon e guardar os atributos daquele id nele e retornar
+     * 
+     * @param int id
+     * @return Pokemon novo
+     * 
+     * @var String path
+     * @var Pokemon novo
+     * @var BufferedReader br
+     * @var String linha
+     * @var boolean found
+     * @var String[] dados
+     * @var int idarquivo
+     */
+
+    public Pokemon ler(int id) {
+        // definir dados
+        Pokemon novo = null;
+        String linha = "";
+        BufferedReader br = null;
+        String path = "C:/Users/User11/Documents/AEDS02/Verde/TP02/Q01/pokemon.csv";
+        boolean found = false;
+        // teste para se conseguiu abrir o arquivo
+        try {
+            br = new BufferedReader(new FileReader(path));
+            br.readLine(); // pular primeira linha do arquivo
+            // continuar lendo enquanto não encontrar o id
+            while ((linha = br.readLine()) != null && !found) {
+                String[] dados = linha.split(",");// separa os atributos pela ,
+                int idArquivo = Integer.parseInt(dados[0]);// inicializa váriavel com o id de cada linha
+                if (idArquivo == id) {
+                    found = true;
+                    // Remover os colchetes e as aspas simples, depois dividir por vírgula
+                    String habilidadesLimpa = dados[6].replace("[", "").replace("]", "").replace("'", "").trim();
+                    List<String> abilities = Arrays.asList(habilidadesLimpa.split(","));
+                    // inicializar novo pokemon
+                    novo = new Pokemon(idArquivo,
+                            Integer.parseInt(dados[1]), // generation
+                            dados[2], // name
+                            dados[3], // description
+                            dados[4], // type1
+                            dados[5].isEmpty() ? null : dados[5], // type2
+                            abilities,
+                            Double.parseDouble(dados[7]), // weight_kg
+                            Double.parseDouble(dados[8]), // height_m
+                            Integer.parseInt(dados[9]), // capture_rate
+                            Boolean.parseBoolean(dados[10]), // is_legendary
+                            new SimpleDateFormat("dd/MM/yyyy").parse(dados[11]) // capture_date
+                    );
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null)
+                    br.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        // return
+        return novo;
+    }
+
+    /**
      * Metódo Main
      * Ler arquivo do csv os ids, gerar lista de Pokemons e printar na tela a lista
      * 
      * @version 1 - teste de metódo printar e dos construtores CERTO
+     * @version 2 - teste do metódo de leitura e printar pokemon lido
      * 
      * 
      */
 
     public static void main(String args[]) {
-        // definir dados
+        // Instanciar a classe Pokemon e ler o Pokémon com ID específico
+        Pokemon leitor = new Pokemon();
+        Pokemon resultado = leitor.ler(115); // Teste com o ID 115 (ou qualquer outro)
+
+        // Verificar se encontrou o Pokémon e imprimir as informações
+        if (resultado != null) {
+            System.out.println(resultado.imprimir());
+        } else {
+            System.out.println("Pokémon com ID 115 não encontrado.");
+        }
 
     }
 
