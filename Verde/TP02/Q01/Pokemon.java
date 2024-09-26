@@ -285,9 +285,8 @@ public class Pokemon {
         return "[#" + id + " -> " + name + ":" + description + " - ['" + type1
                 + (type2 != null ? "', '" + type2 : "']") + " - ['" + String.join("', '", abilities) + "']" + " - "
                 + weight + "kg - " + height + "m - " + captureRate + "% - "
-                + (isLegendary ? "false" : "true") + " - " + generation + " gen] - "
+                + (isLegendary ? "true" : "false") + " - " + generation + " gen] - "
                 + new SimpleDateFormat("dd/MM/yyyy").format(captureDate);
-
     }
 
     /**
@@ -333,16 +332,15 @@ public class Pokemon {
                         found = true;
 
                         // Corrigir o campo de habilidades (remover colchetes e aspas duplas)
-                        String habilidadesLimpa = dados[6].replace("[", "").replace("]", "").replace("\"", "").trim();
-                        List<String> abilities = Arrays.asList(habilidadesLimpa.split(", ")); // Agora vai tratar
-                                                                                              // corretamente
+                        String habilidadesLimpa = dados[6].replace("[", "").replace("]", "").replace("\"", "")
+                                .replace("'", "").trim();
+                        List<String> abilities = Arrays.asList(habilidadesLimpa.split(",\\s*"));
 
                         // Inicializar novo Pokémon
-                        // Verificar se o campo de peso e altura não estão vazios antes de converter
                         double weight = !dados[7].isEmpty() ? Double.parseDouble(dados[7]) : 0.0;
                         double height = !dados[8].isEmpty() ? Double.parseDouble(dados[8]) : 0.0;
                         int captureRate = !dados[9].isEmpty() ? Integer.parseInt(dados[9]) : 0;
-                        boolean isLegendary = dados[10].equals("1"); // Tratar 0 e 1 para isLegendary
+                        boolean isLegendary = dados[10].equals("1");
 
                         // Converter a data
                         Date captureDate = null;
@@ -387,7 +385,7 @@ public class Pokemon {
 
         // Verificar se encontrou o Pokémon e imprimir as informações
         if (resultado != null) {
-            MyIO.println(resultado.imprimir());
+            System.out.println(resultado.imprimir());
         } else {
             System.out.println("Pokémon com ID 115 não encontrado.");
         }
