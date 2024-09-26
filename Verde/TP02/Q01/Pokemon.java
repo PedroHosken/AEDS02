@@ -283,7 +283,7 @@ public class Pokemon {
 
     public String imprimir() {
         return "[#" + id + " -> " + name + ":" + description + " - ['" + type1
-                + (type2 != null ? "', '" + type2 : "']") + " - ['" + String.join("', '", abilities) + "']" + " - "
+                + (type2 != null ? "', '" + type2 + "']" : "']") + " - ['" + String.join("', '", abilities) + "']" + " - "
                 + weight + "kg - " + height + "m - " + captureRate + "% - "
                 + (isLegendary ? "true" : "false") + " - " + generation + " gen] - "
                 + new SimpleDateFormat("dd/MM/yyyy").format(captureDate);
@@ -322,7 +322,7 @@ public class Pokemon {
 
             // continuar lendo enquanto não encontrar o id
             while ((linha = br.readLine()) != null && !found) {
-                // Dividir a linha manualmente para evitar confusões com habilidades
+                // Dividir a linha com base nas vírgulas, mas respeitando campos entre aspas
                 String[] dados = linha.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
                 if (!dados[0].isEmpty()) {
@@ -330,6 +330,10 @@ public class Pokemon {
 
                     if (idArquivo == id) {
                         found = true;
+
+                        // Capturar type1 e type2 corretamente
+                        String type1 = dados[4].trim();
+                        String type2 = dados[5].isEmpty() ? null : dados[5].trim(); // Verifica se o type2 é vazio
 
                         // Corrigir o campo de habilidades (remover colchetes e aspas duplas)
                         String habilidadesLimpa = dados[6].replace("[", "").replace("]", "").replace("\"", "")
@@ -348,8 +352,8 @@ public class Pokemon {
                             captureDate = new SimpleDateFormat("dd/MM/yyyy").parse(dados[11]);
                         }
 
-                        novo = new Pokemon(idArquivo, Integer.parseInt(dados[1]), dados[2], dados[3], dados[4],
-                                dados[5].isEmpty() ? null : dados[5], abilities,
+                        novo = new Pokemon(idArquivo, Integer.parseInt(dados[1]), dados[2], dados[3], type1, type2,
+                                abilities,
                                 weight, height, captureRate, isLegendary, captureDate);
                     }
                 }
@@ -372,22 +376,36 @@ public class Pokemon {
      * Metódo Main
      * Ler arquivo do csv os ids, gerar lista de Pokemons e printar na tela a lista
      * 
-     * @version 1 - teste de metódo printar e dos construtores CERTO
-     * @version 2 - teste do metódo de leitura e printar pokemon lido
+     * @version 1 - teste de metódo printar e dos construtores -  CERTO
+     * @version 2 - teste do metódo de leitura e printar pokemon lido - CERTO
+     * @version Final - Ler ids enquanto diferente de FIM e chamar metódos - CERTO
+     * 
+     * @var String linha
+     * @var int proucurado
+     * @var Pokemon leitor
+     * @var Pokemon resultado
      * 
      * 
      */
 
     public static void main(String args[]) {
-        // Instanciar a classe Pokemon e ler o Pokémon com ID específico
+        // definir dados
+        String linha = "";
+        int proucurado = 0;
         Pokemon leitor = new Pokemon();
-        Pokemon resultado = leitor.ler(115); // Teste com o ID 115 (ou qualquer outro)
-
-        // Verificar se encontrou o Pokémon e imprimir as informações
-        if (resultado != null) {
-            System.out.println(resultado.imprimir());
-        } else {
-            System.out.println("Pokémon com ID 115 não encontrado.");
+        Pokemon resultado = null;
+        // ler ids, while diferente de FIM
+        linha = MyIO.readLine();
+        while (!linha.equals("FIM")) {
+            proucurado = Integer.parseInt(linha);
+            resultado = leitor.ler(proucurado);
+            if (resultado != null) {
+                System.out.println("Type1: " + resultado.type1 + ", Type2: " + (resultado.type2 != null ? resultado.type2 : "null"));
+                System.out.println(resultado.imprimir());
+            } else {
+                System.out.println("Pokémon com ID" + proucurado);
+            }
+            linha = MyIO.readLine();
         }
 
     }
@@ -423,6 +441,22 @@ public class Pokemon {
      * );
      * 
      * System.out.println(ampharos.imprimir());
+     * 
+     * 
+     * 
+     * 
+     * VERSÃO 2 - METÓDO DE LEITURA
+     * // Instanciar a classe Pokemon e ler o Pokémon com ID específico
+     * Pokemon leitor = new Pokemon();
+     * Pokemon resultado = leitor.ler(115); // Teste com o ID 115 (ou qualquer
+     * outro)
+     * 
+     * // Verificar se encontrou o Pokémon e imprimir as informações
+     * if (resultado != null) {
+     * System.out.println(resultado.imprimir());
+     * } else {
+     * System.out.println("Pokémon com ID 115 não encontrado.");
+     * }
      */
 
 }
