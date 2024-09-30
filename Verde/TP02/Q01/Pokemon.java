@@ -282,7 +282,7 @@ public class Pokemon {
      */
 
     public String imprimir() {
-        return "[#" + id + " -> " + name + ":" + description + " - ['" + type1
+        return "[#" + id + " -> " + name + ": " + description + " - ['" + type1
                 + (type2 != null ? "', '" + type2 + "']" : "']") + " - ['" + String.join("', '", abilities) + "']" + " - "
                 + weight + "kg - " + height + "m - " + captureRate + "% - "
                 + (isLegendary ? "true" : "false") + " - " + generation + " gen] - "
@@ -311,7 +311,8 @@ public class Pokemon {
         Pokemon novo = null;
         String linha = "";
         BufferedReader br = null;
-        String path = "C:/Users/User11/Documents/AEDS02/Verde/TP02/Q01/pokemon.csv"; // certifique-se de que este
+        String path = "/tmp/pokemon.csv"; // certifique-se de que este         String path = "C:/Users/User11/Documents/AEDS02/Verde/TP02/Q01/pokemon.csv"; // certifique-se de que este
+
                                                                                      // caminho esteja correto
         boolean found = false;
 
@@ -400,7 +401,7 @@ public class Pokemon {
             proucurado = Integer.parseInt(linha);
             resultado = leitor.ler(proucurado);
             if (resultado != null) {
-                System.out.println("Type1: " + resultado.type1 + ", Type2: " + (resultado.type2 != null ? resultado.type2 : "null"));
+                //System.out.println("Type1: " + resultado.type1 + ", Type2: " + (resultado.type2 != null ? resultado.type2 : "null"));
                 System.out.println(resultado.imprimir());
             } else {
                 System.out.println("Pokémon com ID" + proucurado);
