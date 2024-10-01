@@ -10,12 +10,12 @@
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
-#include <wchar.h>   
+#include <wchar.h>
 #include <locale.h>
 
 //---------Variáveis Globais----------//
 #define MAX_ABILITIES 10 // Máximo de habilidades que um Pokémon pode ter
-#define MAX_STRING 50    // Tamanho máximo das strings
+#define MAX_STRING 100   // Tamanho máximo das strings
 
 /**
  * Struct Pokemon
@@ -200,7 +200,7 @@ void imprimir(Pokemon *p)
     // imprimir
     printf("[#%i -> %s: %s - ['%s'", p->id, p->name, p->description, p->type1);
     // testar type2
-    if (strcmp(p->type2,"") != 0)
+    if (strcmp(p->type2, "") != 0)
     {
         printf(", '%s']", p->type2);
     }
@@ -228,35 +228,72 @@ void imprimir(Pokemon *p)
 /**
  * Metódo Ler
  * Objetivo: ler arquivo csv e construir Pokemon
- * 
+ * @param int id do pokemon a ser lido
+ * @param char[] path
+ * @return Pokemon p
+ *
+ * @var Pokemon p // construtor
+ * @var FILE arquivo csv // onde vamos ler os atributos
+ * @var char[MAX_STRING] linha // linha do arquivo ccsv
+ * @var bool found // variavel de controle para quando achar
+ * @var int pesq // id pesquisado
  */
+
+Pokemon *ler(int id, const char *path)
+{
+    // definir dados
+    Pokemon *p = c1(); // construtor padrão de pokemon
+    bool found = false;
+    char linha[MAX_STRING];         // linha
+    FILE *file = fopen(path, "rt"); // arquivo definido
+    int pesq = 0;
+    // teste para verificar se arquivo está nulo
+    if (file == NULL)
+    {
+        printf("Erro ao abrir arquivo, confira o path");
+    }
+    else
+    {
+        printf("Tudo certo\n");
+    }
+    // ler cabeçalho do arquivo
+    fgets(linha, sizeof(linha), file);
+    // ler arquivo csv enquanto não encontrar o id
+    while (!found && file != NULL)
+    {
+        fgets(linha, sizeof(linha), file); // lê a linha
+        printf("%s\n", linha); // teste para ver se linha está correta
+        //teste se esse é o id que estamos pesquisando
+        if (pesq == id)
+        {
+            found = true;
+        }
+        pesq = pesq + 1;
+    }
+    // fechar arquivo
+    fclose(file);
+    // retornar pokemon
+    return p;
+}
 
 /**
  * Função main
  * @version 1 testar metódos de construtor, imprimir e de free
+ * @version 2 testar metódo de ler arquivo e imprimir Pokemon
  */
 int main()
 {
     // definir dados
     setlocale(LC_ALL, "UTF-8"); // setCharset
-    char *abilities[] = {"Static", "Plus"};
-    // Criar um Pokémon usando o construtor com parâmetros
-    Pokemon *p = c2(181, 2, "Ampharos", "Light Pokémon", "electric", "",
-                    abilities, 2, 61.5, 1.4, 45, false, "25/05/1999");
-
-    // Imprimir os atributos do Pokémon
-    imprimir(p);
-
-    // Liberar a memória alocada
-    freePokemon(p);
-
+    // testar metódo de leitura
+    ler(4, "pokemon.csv");
     // retornar
     return 0;
 }
 
 /**
  * TESTES
- * 
+ *
  * @version 1 - Teste de construtores e imprimir - UTF ERRADO
  * // definir dados
     setlocale(LC_ALL, "UTF-8"); // setCharset
@@ -273,5 +310,5 @@ int main()
 
     // retornar
     return 0;
- * 
+ *
  */
