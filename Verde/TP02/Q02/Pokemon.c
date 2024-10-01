@@ -237,6 +237,7 @@ void imprimir(Pokemon *p)
  * @var char[MAX_STRING] linha // linha do arquivo ccsv
  * @var bool found // variavel de controle para quando achar
  * @var int pesq // id pesquisado
+ * @var char* campo // separar a linha em campos e salvar
  */
 
 Pokemon *ler(int id, const char *path)
@@ -262,14 +263,23 @@ Pokemon *ler(int id, const char *path)
     while (!found && file != NULL)
     {
         fgets(linha, sizeof(linha), file); // lê a linha
-        printf("%s\n", linha); // teste para ver se linha está correta
-        //teste se esse é o id que estamos pesquisando
+        printf("%s\n", linha);             // teste para ver se linha está correta
+        // teste se esse é o id que estamos pesquisando
         if (pesq == id)
         {
             found = true;
         }
         pesq = pesq + 1;
     }
+    // separar os campos do arquivo csv
+    char *campo = strtok(linha, ","); // Separar a linha com base nas vírgulas
+
+    while (campo != NULL)
+    {
+        printf("Campo: %s\n", campo); // Exibir o campo
+        campo = strtok(NULL, ",");    // Continuar para o próximo campo
+    }
+
     // fechar arquivo
     fclose(file);
     // retornar pokemon
