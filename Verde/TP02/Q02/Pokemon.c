@@ -238,6 +238,7 @@ void imprimir(Pokemon *p)
  * @var bool found // variavel de controle para quando achar
  * @var int pesq // id pesquisado
  * @var char* campo // separar a linha em campos e salvar
+ * @var char *atributos // organizar os campos
  */
 
 Pokemon *ler(int id, const char *path)
@@ -246,6 +247,7 @@ Pokemon *ler(int id, const char *path)
     Pokemon *p = c1(); // construtor padrão de pokemon
     bool found = false;
     char linha[MAX_STRING];         // linha
+    char linha2[MAX_STRING];        // corrigir uso de linha no while
     FILE *file = fopen(path, "rt"); // arquivo definido
     int pesq = 0;
     // teste para verificar se arquivo está nulo
@@ -260,8 +262,20 @@ Pokemon *ler(int id, const char *path)
     // ler cabeçalho do arquivo
     fgets(linha, sizeof(linha), file);
     // ler arquivo csv enquanto não encontrar o id
-    while (!found && file != NULL)
+    while (fgets(linha, sizeof(linha), file) != NULL && !found)
     {
+        // separar os campos do arquivo CSV
+        char *campo = strtok(linha, ","); // Pega o primeiro campo (ID)
+        pesq = atoi(campo);               // converte o primeiro campo (id) para inteiro
+
+        // comparando o ID atual com o ID que estamos procurando
+        if (pesq == id)
+        {
+            found = true;
+            strcpy(linha2, linha);
+        }
+
+        /* TESTE DE LINHA OK
         fgets(linha, sizeof(linha), file); // lê a linha
         printf("%s\n", linha);             // teste para ver se linha está correta
         // teste se esse é o id que estamos pesquisando
@@ -270,15 +284,74 @@ Pokemon *ler(int id, const char *path)
             found = true;
         }
         pesq = pesq + 1;
+        */
     }
-    // separar os campos do arquivo csv
-    char *campo = strtok(linha, ","); // Separar a linha com base nas vírgulas
+    // printf("%s\n", linha2); - OK
+    if (found)
+    {
+        // ID encontrado, separar os demais campos
+        p->id = pesq;                    // passar o id
+        char *campo = strtok(NULL, ","); // ler generation
+        p->generation = atoi(campo);
 
+        campo = strtok(NULL, ","); // ler name
+        strcpy(p->name, campo);
+
+        campo = strtok(NULL, ","); // ler description
+        strcpy(p->description, campo);
+
+        campo = strtok(NULL, ","); // ler type1
+        strcpy(p->type1, campo);
+
+        campo = strtok(NULL, ","); // ler type2 (campo pode ser vazio)
+        if (strcmp(campo, "") == 0)
+        {
+            strcpy(p->type2, "");
+        }
+        else
+        {
+            strcpy(p->type2, campo);
+        }
+
+        // Processar abilities (remover colchetes e separar por vírgula)
+        campo = strtok(NULL, ",");
+        strcpy(campo, strtok(campo, "[]")); // remover colchetes
+        char *ability = strtok(campo, "' ,");
+        int abilityIndex = 0;
+        while (ability != NULL && abilityIndex < MAX_ABILITIES)
+        {
+            strcpy(p->abilities[abilityIndex++], ability);
+            ability = strtok(NULL, "' ,");
+        }
+        p->abilitiesCount = abilityIndex;
+
+        campo = strtok(NULL, ","); // ler weight
+        p->weight = atof(campo);
+
+        campo = strtok(NULL, ","); // ler height
+        p->height = atof(campo);
+
+        campo = strtok(NULL, ","); // ler captureRate
+        p->captureRate = atoi(campo);
+
+        campo = strtok(NULL, ","); // ler isLegendary
+        p->isLegendary = atoi(campo) == 1;
+
+        campo = strtok(NULL, ",");         // ler captureDate
+        parseDate(campo, &p->captureDate); // tratar a data
+    }
+    else
+    {
+        printf("Pokémon com ID %d não encontrado.\n", p->id);
+    }
+
+    /* TESTE DE CAMPOS OK
     while (campo != NULL)
     {
         printf("Campo: %s\n", campo); // Exibir o campo
         campo = strtok(NULL, ",");    // Continuar para o próximo campo
     }
+    */
 
     // fechar arquivo
     fclose(file);
@@ -294,9 +367,10 @@ Pokemon *ler(int id, const char *path)
 int main()
 {
     // definir dados
-    setlocale(LC_ALL, "UTF-8"); // setCharset
+    setlocale(LC_ALL, "UTF-8"); // setCharset 
     // testar metódo de leitura
-    ler(4, "pokemon.csv");
+    Pokemon *p = ler(4, "pokemon.csv");
+    imprimir(p);
     // retornar
     return 0;
 }
