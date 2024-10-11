@@ -500,62 +500,47 @@ public class Pokemon {
      * @var Array<Pokemon> lista2 - lista copiada
      * 
      */
-    static void HeapSort(ArrayList<Pokemon> lista, int n) {
-        // Alterar o vetor ignorando a posicao zero
-        ArrayList<Pokemon> tmp = new ArrayList<>(n + 1);
-        tmp.add(null); // Adiciona um elemento vazio na posição 0
-        for (int i = 0; i < n; i++) {
-            tmp.set(i + 1, lista.get(i));
-        }
-        lista = tmp;// lista modificada
+    static void heapSort(ArrayList<Pokemon> lista) {
+        int n = lista.size();
 
-        // Contrucao do heap
-        for (int tamHeap = 2; tamHeap <= n; tamHeap++) {
-            construir(lista, tamHeap);
+        // Construir o heap (reorganizar o array)
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heapify(lista, n, i);
         }
 
-        // Ordenacao propriamente dita
-        int tamHeap = n;
-        while (tamHeap > 1) {
-            swap(lista, 1, tamHeap--);
-            reconstruir(lista, tamHeap);
-        }
+        // Extraindo elementos do heap
+        for (int i = n - 1; i > 0; i--) {
+            // Move a raiz atual para o final
+            swap(lista, 0, i);
 
-        // Alterar o vetor para voltar a posicao zero
-        tmp = lista;
-        lista = new ArrayList<>(n); // Reinicializa lista com tamanho correto
-        for (int i = 0; i < n; i++) {
-            lista.add(tmp.get(i + 1)); // Adiciona os elementos de tmp na lista, ignorando o índice 0 de tmp
+            // Chama heapify no heap reduzido
+            heapify(lista, i, 0);
         }
     }
 
-    static void construir(ArrayList<Pokemon> lista, int tamHeap) {
-        for (int i = tamHeap; i > 1 && lista.get(i).getHeight() > lista.get(i / 2).getHeight(); i /= 2) {
-            swap(lista, i, i / 2);
-        }
-    }
+    // Método para garantir que o heap está correto a partir de 'i'
+    static void heapify(ArrayList<Pokemon> lista, int n, int i) {
+        int maior = i; // Inicializa o maior como a raiz
+        int esquerda = 2 * i + 1; // Filho da esquerda
+        int direita = 2 * i + 2; // Filho da direita
 
-    static void reconstruir(ArrayList<Pokemon> lista, int tamHeap) {
-        int i = 1;
-        while (i <= (tamHeap / 2)) {
-            int filho = getMaiorFilho(lista, i, tamHeap);
-            if (lista.get(i).getHeight() < lista.get(filho).getHeight()) {
-                swap(lista, i, filho);
-                lista.add(i, lista.get(filho));
-            } else {
-                i = tamHeap;
-            }
+        // Se o filho da esquerda for maior que a raiz
+        if (esquerda < n && lista.get(esquerda).getHeight() > lista.get(maior).getHeight()) {
+            maior = esquerda;
         }
-    }
 
-    static int getMaiorFilho(ArrayList<Pokemon> lista, int i, int tamHeap) {
-        int filho = 0;
-        if (2 * i == tamHeap || lista.get(2 * i).getHeight() > lista.get(2 * i + 1).getHeight()) {
-            filho = 2 * i;
-        } else {
-            filho = 2 * i + 1;
+        // Se o filho da direita for maior que o maior até agora
+        if (direita < n && lista.get(direita).getHeight() > lista.get(maior).getHeight()) {
+            maior = direita;
         }
-        return filho;
+
+        // Se o maior não é a raiz
+        if (maior != i) {
+            swap(lista, i, maior);
+
+            // Recursivamente aplica o heapify na subárvore afetada
+            heapify(lista, n, maior);
+        }
     }
 
     /**
@@ -598,12 +583,15 @@ public class Pokemon {
             }
             linha = sc.nextLine();
         }
-        // printar lista desordenada
-        for (Pokemon p : lista) {
-            System.out.println(p.imprimir());
-        }
+        /*
+         * // printar lista desordenada
+         * for (Pokemon p : lista) {
+         * System.out.println(p.imprimir());
+         * }
+         * System.out.println("");
+         */
         // chamar metódo de ordenação por seleção
-        HeapSort(lista, lista.size());
+        heapSort(lista);
         // printar lista ordenada
         for (Pokemon p : lista) {
             System.out.println(p.imprimir());
