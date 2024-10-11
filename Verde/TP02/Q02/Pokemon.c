@@ -51,9 +51,19 @@ typedef struct
  */
 void parseDate(const char *dateStr, struct tm *date)
 {
-    sscanf(dateStr, "%d/%d/%d", &date->tm_mday, &date->tm_mon, &date->tm_year);
-    date->tm_mon -= 1;     // Meses em struct tm são de 0 a 11
-    date->tm_year -= 1900; // Ano em struct tm é o número de anos desde 1900
+    printf("dentro da data\n");
+    printf("Data recebida: '%s'\n", dateStr);
+
+    int parsed = sscanf(dateStr, "%d/%d/%d", &date->tm_mday, &date->tm_mon, &date->tm_year);
+    if (parsed == 3)
+    {
+        date->tm_mon -= 1;     // Meses em struct tm são de 0 a 11
+        date->tm_year -= 1900; // Ano em struct tm é o número de anos desde 1900
+    }
+    else
+    {
+        printf("Erro ao interpretar a data: %s\n", dateStr);
+    }
 }
 
 /**
@@ -247,115 +257,152 @@ Pokemon *ler(int id, const char *path)
     Pokemon *p = c1(); // construtor padrão de pokemon
     bool found = false;
     char linha[MAX_STRING];         // linha
-    char linha2[MAX_STRING];        // corrigir uso de linha no while
-    FILE *file = fopen(path, "rt"); // arquivo definido
+    FILE *file = fopen(path, "rt"); // abrir arquivo CSV
     int pesq = 0;
-    // teste para verificar se arquivo está nulo
+
+    // Verificar se o arquivo foi aberto corretamente
     if (file == NULL)
     {
-        printf("Erro ao abrir arquivo, confira o path");
+        printf("Erro ao abrir arquivo, confira o path.\n");
+        return NULL;
     }
     else
     {
-        printf("Tudo certo\n");
+        printf("tudo certo\n");
     }
-    // ler cabeçalho do arquivo
+
+    // Ler cabeçalho do arquivo (descartar)
     fgets(linha, sizeof(linha), file);
-    // ler arquivo csv enquanto não encontrar o id
+
+    // Ler arquivo CSV enquanto o ID não for encontrado
     while (fgets(linha, sizeof(linha), file) != NULL && !found)
     {
-        // separar os campos do arquivo CSV
+        // Separar os campos do arquivo CSV
         char *campo = strtok(linha, ","); // Pega o primeiro campo (ID)
-        pesq = atoi(campo);               // converte o primeiro campo (id) para inteiro
+        pesq = atoi(campo);               // Converte o primeiro campo (ID) para inteiro
 
-        // comparando o ID atual com o ID que estamos procurando
+        // Comparando o ID atual com o ID que estamos procurando
         if (pesq == id)
         {
+            printf("Entrou\n");
             found = true;
-            strcpy(linha2, linha);
-        }
+            // Separar os demais campos
+            p->id = pesq; // Armazenar o ID
+            printf("guardou id\n");
+            campo = strtok(NULL, ","); // Ler generation
+            p->generation = atoi(campo);
+            printf("guradou generation\n");
 
-        /* TESTE DE LINHA OK
-        fgets(linha, sizeof(linha), file); // lê a linha
-        printf("%s\n", linha);             // teste para ver se linha está correta
-        // teste se esse é o id que estamos pesquisando
-        if (pesq == id)
-        {
-            found = true;
+            campo = strtok(NULL, ","); // Ler name
+            strncpy(p->name, campo);
+            printf("guardou name\n");
+
+            campo = strtok(NULL, ","); // Ler description
+            strcpy(p->description, campo);
+            printf("guradou description\n");
+
+            campo = strtok(NULL, ","); // Ler type1
+            strcpy(p->type1, campo);
+            printf("guradou type1\n");
+
+            campo = strtok(NULL, ","); // Ler type2 (campo pode ser vazio)
+            if (campo != NULL && strcmp(campo, "") != 0)
+            {
+                strcpy(p->type2, campo);
+                printf("guradou type2 cheio\n");
+            }
+            else
+            {
+                strcpy(p->type2, "");
+                printf("guradou type2 vazio\n");
+            }
+
+            // Processar abilities (remover colchetes e aspas)
+            campo = strtok(NULL, ","); // Ler campo de habilidades
+            if (campo != NULL)
+            {
+                // Remover colchetes e aspas
+                char habilidades[MAX_STRING];
+                strcpy(habilidades, campo); // Copiar para uma variável temporária
+                char *start = strchr(habilidades, '[');
+                char *end = strrchr(habilidades, ']');
+                if (start != NULL && end != NULL)
+                {
+                    *end = '\0'; // Remover o colchete de fechamento
+                    start++;     // Ignorar o colchete de abertura
+                }
+                else
+                {
+                    start = habilidades; // Se não houver colchetes, considerar o campo todo
+                }
+
+                // Remover aspas no campo de habilidades
+                for (int i = 0; start[i] != '\0'; i++)
+                {
+                    if (start[i] == '"' || start[i] == '\'')
+                    {
+                        start[i] = ' '; // Remover aspas substituindo por espaço
+                    }
+                }
+
+                // Separar habilidades
+                char *ability = strtok(start, ", ");
+                int abilityIndex = 0;
+                while (ability != NULL && abilityIndex < MAX_ABILITIES)
+                {
+                    strcpy(p->abilities[abilityIndex++], ability);
+                    ability = strtok(NULL, ", ");
+                }
+                p->abilitiesCount = abilityIndex;
+            }
+            else
+            {
+                printf("Campo de habilidades está nulo.\n");
+            }
+
+            campo = strtok(NULL, ","); // Ler weight
+            p->weight = atof(campo);
+            printf("guradou wight\n");
+
+            campo = strtok(NULL, ","); // Ler height
+            p->height = atof(campo);
+            printf("guradou height\n");
+
+            campo = strtok(NULL, ","); // Ler captureRate
+            p->captureRate = atoi(campo);
+            printf("guradou captureRate\n");
+
+            campo = strtok(NULL, ","); // Ler isLegendary
+            p->isLegendary = atoi(campo) == 1;
+            printf("guradou isLegendary\n");
+
+            printf("guradou antes data\n");
+
+            // Ler campo da data
+            campo = strtok(NULL, ","); // Ler captureDate
+            if (campo != NULL)
+            {
+                printf("Campo da data: '%s'\n", campo); // Exibir o campo da data
+                parseDate(campo, &p->captureDate);      // Tratar a data
+                printf("Data armazenada com sucesso.\n");
+            }
+            else
+            {
+                printf("Campo da data está nulo.\n");
+            }
         }
-        pesq = pesq + 1;
-        */
     }
-    // printf("%s\n", linha2); - OK
-    if (found)
+
+    // Verificar se o Pokémon foi encontrado
+    if (!found)
     {
-        // ID encontrado, separar os demais campos
-        p->id = pesq;                    // passar o id
-        char *campo = strtok(NULL, ","); // ler generation
-        p->generation = atoi(campo);
-
-        campo = strtok(NULL, ","); // ler name
-        strcpy(p->name, campo);
-
-        campo = strtok(NULL, ","); // ler description
-        strcpy(p->description, campo);
-
-        campo = strtok(NULL, ","); // ler type1
-        strcpy(p->type1, campo);
-
-        campo = strtok(NULL, ","); // ler type2 (campo pode ser vazio)
-        if (strcmp(campo, "") == 0)
-        {
-            strcpy(p->type2, "");
-        }
-        else
-        {
-            strcpy(p->type2, campo);
-        }
-
-        // Processar abilities (remover colchetes e separar por vírgula)
-        campo = strtok(NULL, ",");
-        strcpy(campo, strtok(campo, "[]")); // remover colchetes
-        char *ability = strtok(campo, "' ,");
-        int abilityIndex = 0;
-        while (ability != NULL && abilityIndex < MAX_ABILITIES)
-        {
-            strcpy(p->abilities[abilityIndex++], ability);
-            ability = strtok(NULL, "' ,");
-        }
-        p->abilitiesCount = abilityIndex;
-
-        campo = strtok(NULL, ","); // ler weight
-        p->weight = atof(campo);
-
-        campo = strtok(NULL, ","); // ler height
-        p->height = atof(campo);
-
-        campo = strtok(NULL, ","); // ler captureRate
-        p->captureRate = atoi(campo);
-
-        campo = strtok(NULL, ","); // ler isLegendary
-        p->isLegendary = atoi(campo) == 1;
-
-        campo = strtok(NULL, ",");         // ler captureDate
-        parseDate(campo, &p->captureDate); // tratar a data
-    }
-    else
-    {
-        printf("Pokémon com ID %d não encontrado.\n", p->id);
+        printf("Pokémon com ID %d não encontrado.\n", id);
     }
 
-    /* TESTE DE CAMPOS OK
-    while (campo != NULL)
-    {
-        printf("Campo: %s\n", campo); // Exibir o campo
-        campo = strtok(NULL, ",");    // Continuar para o próximo campo
-    }
-    */
-
-    // fechar arquivo
+    // Fechar o arquivo
     fclose(file);
-    // retornar pokemon
+
+    // Retornar o Pokémon preenchido
     return p;
 }
 
@@ -367,7 +414,7 @@ Pokemon *ler(int id, const char *path)
 int main()
 {
     // definir dados
-    setlocale(LC_ALL, "UTF-8"); // setCharset 
+    setlocale(LC_ALL, "UTF-8"); // setCharset
     // testar metódo de leitura
     Pokemon *p = ler(4, "pokemon.csv");
     imprimir(p);
