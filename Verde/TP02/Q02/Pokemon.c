@@ -140,43 +140,41 @@ Pokemon *c2(int id, int generation, const char *name, const char *description, c
             const char *type2, char **abilities, int abilitiesCount, double weight, double height,
             int captureRate, bool isLegendary, const char *captureDateStr)
 {
-    // definir dados
+    // Alocar o Pokémon
     Pokemon *p = (Pokemon *)malloc(sizeof(Pokemon));
-    // teste se foi alocado
     if (p == NULL)
     {
         printf("Erro ao alocar memória para o Pokémon.\n");
     }
-    else
+    // inicializar atributos com valores dos parametros
+    p->id = id;
+    p->generation = generation;
+    strcpy(p->name, name);
+    strcpy(p->description, description);
+    strcpy(p->type1, type1);
+    if (type2 != NULL)
     {
-        // inicializar atributos com valores dos parametros
-        p->id = id;
-        p->generation = generation;
-        strcpy(p->name, name);
-        strcpy(p->description, description);
-        strcpy(p->type1, type1);
-        if (type2 != NULL)
-        {
-            strcpy(p->type2, type2);
-        }
-
-        // Inicializar o array de habilidades
-        p->abilitiesCount = abilitiesCount;
-        for (int i = 0; i < abilitiesCount && i < MAX_ABILITIES; i++)
-        {
-            strcpy(p->abilities[i], abilities[i]);
-        }
-
-        p->weight = weight;
-        p->height = height;
-        p->captureRate = captureRate;
-        p->isLegendary = isLegendary;
-        // Usar a função alternativa para fazer parsing da data
-        parseDate(captureDateStr, &p->captureDate);
+        strcpy(p->type2, type2);
     }
+
+    // Copiar lista de habilidades por meio da variável de controle
+    p->abilitiesCount = abilitiesCount;
+    p->abilities = (char **)malloc(abilitiesCount * sizeof(char *));
+    for (int i = 0; i < abilitiesCount; i++)
+    {
+        p->abilities[i] = (char *)malloc((strlen(abilities[i]) + 1) * sizeof(char));
+        strcpy(p->abilities[i], abilities[i]);
+    }
+
+    p->weight = weight;
+    p->height = height;
+    p->captureRate = captureRate;
+    p->isLegendary = isLegendary;
+    strcpy(p->captureDate, captureDate);
     // retornar
     return p;
 }
+
 /**
  * Free Pokemon
  * Objetivo: Metódo para liberar memória alocada
@@ -207,10 +205,9 @@ void freePokemon(Pokemon *p)
 
 void imprimir(Pokemon *p)
 {
-    // imprimir
-    printf("[#%i -> %s: %s - ['%s'", p->id, p->name, p->description, p->type1);
-    // testar type2
-    if (strcmp(p->type2, "") != 0)
+    printf("Entrei");
+    printf("[#%d -> %s: %s - ['%s'", p->id, p->name, p->description, p->type1);
+    if (strlen(p->type2) > 0)
     {
         printf(", '%s']", p->type2);
     }
@@ -229,180 +226,119 @@ void imprimir(Pokemon *p)
             printf(", ");
         }
     }
-    // restante
-    printf("] - %.2fkg - %.2fm - %d%% - %s - %d gen] - %02d/%02d/%04d\n",
-           p->weight, p->height, p->captureRate, p->isLegendary ? "true" : "false", p->generation,
-           p->captureDate.tm_mday, p->captureDate.tm_mon + 1, p->captureDate.tm_year + 1900);
+    printf("] - %.2fkg - %.2fm - %d%% - %s - %d gen] - %s",
+           p->weight, p->height, p->captureRate,
+           p->isLegendary ? "true" : "false", p->generation, p->captureDate);
 }
 
-/**
- * Metódo Ler
- * Objetivo: ler arquivo csv e construir Pokemon
- * @param int id do pokemon a ser lido
- * @param char[] path
- * @return Pokemon p
- *
- * @var Pokemon p // construtor
- * @var FILE arquivo csv // onde vamos ler os atributos
- * @var char[MAX_STRING] linha // linha do arquivo ccsv
- * @var bool found // variavel de controle para quando achar
- * @var int pesq // id pesquisado
- * @var char* campo // separar a linha em campos e salvar
- * @var char *atributos // organizar os campos
- */
-
-Pokemon *ler(int id, const char *path)
+// Função para processar habilidades
+char **processAbilities(char *abilitiesRaw, int *abilitiesCount)
 {
-    // definir dados
-    Pokemon *p = c1(); // construtor padrão de pokemon
-    bool found = false;
-    char linha[MAX_STRING];         // linha
-    FILE *file = fopen(path, "rt"); // abrir arquivo CSV
-    int pesq = 0;
+    abilitiesRaw++;                                // Remover o primeiro colchete
+    abilitiesRaw[strlen(abilitiesRaw) - 1] = '\0'; // Remover o último colchete
 
-    // Verificar se o arquivo foi aberto corretamente
+    char *token = strtok(abilitiesRaw, ", ");
+    char **abilities = (char **)malloc(5 * sizeof(char *)); // Supondo até 5 habilidades
+    *abilitiesCount = 0;
+
+    while (token != NULL)
+    {
+        abilities[*abilitiesCount] = (char *)malloc((strlen(token) + 1) * sizeof(char));
+        strcpy(abilities[*abilitiesCount], token);
+        (*abilitiesCount)++;
+        token = strtok(NULL, ", ");
+    }
+
+    return abilities;
+}
+
+// Função para ler um Pokémon de um arquivo CSV (readPokemonFromCSV)// Função para ler um Pokémon de um arquivo CSV (readPokemonFromCSV)
+Pokemon *readPokemonFromCSV(int id)
+{
+    printf("Entrou no método readPokemonFromCSV\n");
+
+    FILE *file = fopen("pokemon.csv", "r");
     if (file == NULL)
     {
         printf("Erro ao abrir arquivo, confira o path.\n");
         return NULL;
     }
-    else
+
+    char line[512]; // Aumentei o buffer para garantir que as linhas maiores sejam capturadas
+    bool found = false;
+    Pokemon *p = NULL;
+
+    // Ignorar a primeira linha (cabeçalho)
+    fgets(line, sizeof(line), file);
+
+    while (fgets(line, sizeof(line), file))
     {
-        printf("tudo certo\n");
-    }
+        char *token;
+        printf("Linha lida: %s\n", line); // Debug para ver a linha sendo lida
 
-    // Ler cabeçalho do arquivo (descartar)
-    fgets(linha, sizeof(linha), file);
+        token = strtok(line, ",");
+        if (token == NULL)
+        {
+            printf("Erro: token é NULL após strtok\n");
+            continue; // Pula para a próxima linha se não encontrar um token
+        }
 
-    // Ler arquivo CSV enquanto o ID não for encontrado
-    while (fgets(linha, sizeof(linha), file) != NULL && !found)
-    {
-        // Separar os campos do arquivo CSV
-        char *campo = strtok(linha, ","); // Pega o primeiro campo (ID)
-        pesq = atoi(campo);               // Converte o primeiro campo (ID) para inteiro
-
-        // Comparando o ID atual com o ID que estamos procurando
-        if (pesq == id)
+        int currentId = atoi(token); // Primeira coluna é o ID
+        if (currentId == id)
         {
             printf("Entrou\n");
             found = true;
-            // Separar os demais campos
-            p->id = pesq; // Armazenar o ID
-            printf("guardou id\n");
-            campo = strtok(NULL, ","); // Ler generation
-            p->generation = atoi(campo);
-            printf("guradou generation\n");
+            printf("ID encontrado: %d\n", currentId);
 
-            campo = strtok(NULL, ","); // Ler name
-            strncpy(p->name, campo);
-            printf("guardou name\n");
+            int generation = atoi(strtok(NULL, ","));
+            char *name = strtok(NULL, ",");
+            char *description = strtok(NULL, ",");
+            char *type1 = strtok(NULL, ",");
+            char *type2 = strtok(NULL, ",");
 
-            campo = strtok(NULL, ","); // Ler description
-            strcpy(p->description, campo);
-            printf("guradou description\n");
-
-            campo = strtok(NULL, ","); // Ler type1
-            strcpy(p->type1, campo);
-            printf("guradou type1\n");
-
-            campo = strtok(NULL, ","); // Ler type2 (campo pode ser vazio)
-            if (campo != NULL && strcmp(campo, "") != 0)
+            if (type2 != NULL && strcmp(type2, "") == 0)
             {
-                strcpy(p->type2, campo);
-                printf("guradou type2 cheio\n");
-            }
-            else
-            {
-                strcpy(p->type2, "");
-                printf("guradou type2 vazio\n");
+                type2 = NULL; // Se o type2 for uma string vazia
             }
 
-            // Processar abilities (remover colchetes e aspas)
-            campo = strtok(NULL, ","); // Ler campo de habilidades
-            if (campo != NULL)
+            // Leitura correta das habilidades que estão entre aspas e colchetes
+            char *abilitiesRaw = strtok(NULL, "\"");
+            if (abilitiesRaw == NULL)
             {
-                // Remover colchetes e aspas
-                char habilidades[MAX_STRING];
-                strcpy(habilidades, campo); // Copiar para uma variável temporária
-                char *start = strchr(habilidades, '[');
-                char *end = strrchr(habilidades, ']');
-                if (start != NULL && end != NULL)
-                {
-                    *end = '\0'; // Remover o colchete de fechamento
-                    start++;     // Ignorar o colchete de abertura
-                }
-                else
-                {
-                    start = habilidades; // Se não houver colchetes, considerar o campo todo
-                }
-
-                // Remover aspas no campo de habilidades
-                for (int i = 0; start[i] != '\0'; i++)
-                {
-                    if (start[i] == '"' || start[i] == '\'')
-                    {
-                        start[i] = ' '; // Remover aspas substituindo por espaço
-                    }
-                }
-
-                // Separar habilidades
-                char *ability = strtok(start, ", ");
-                int abilityIndex = 0;
-                while (ability != NULL && abilityIndex < MAX_ABILITIES)
-                {
-                    strcpy(p->abilities[abilityIndex++], ability);
-                    ability = strtok(NULL, ", ");
-                }
-                p->abilitiesCount = abilityIndex;
-            }
-            else
-            {
-                printf("Campo de habilidades está nulo.\n");
+                printf("Erro ao processar habilidades\n");
+                continue; // Pula para a próxima linha se não encontrar habilidades
             }
 
-            campo = strtok(NULL, ","); // Ler weight
-            p->weight = atof(campo);
-            printf("guradou wight\n");
+            int abilitiesCount = 0;
+            char **abilities = processAbilities(abilitiesRaw, &abilitiesCount);
 
-            campo = strtok(NULL, ","); // Ler height
-            p->height = atof(campo);
-            printf("guradou height\n");
+            double weight = atof(strtok(NULL, ","));
+            double height = atof(strtok(NULL, ","));
+            int captureRate = atoi(strtok(NULL, ","));
+            bool isLegendary = atoi(strtok(NULL, ",")) == 1;
 
-            campo = strtok(NULL, ","); // Ler captureRate
-            p->captureRate = atoi(campo);
-            printf("guradou captureRate\n");
+            // Lendo a data corretamente, sem depender do strtok
+            char *captureDate = strtok(NULL, "\n"); // Captura a data até o fim da linha
 
-            campo = strtok(NULL, ","); // Ler isLegendary
-            p->isLegendary = atoi(campo) == 1;
-            printf("guradou isLegendary\n");
-
-            printf("guradou antes data\n");
-
-            // Ler campo da data
-            campo = strtok(NULL, ","); // Ler captureDate
-            if (campo != NULL)
+            if (captureDate == NULL)
             {
-                printf("Campo da data: '%s'\n", campo); // Exibir o campo da data
-                parseDate(campo, &p->captureDate);      // Tratar a data
-                printf("Data armazenada com sucesso.\n");
+                printf("Erro ao processar data\n");
+                continue; // Pula para a próxima linha se não encontrar a data
             }
-            else
-            {
-                printf("Campo da data está nulo.\n");
-            }
+
+            // Criar o Pokémon
+            p = c2(currentId, generation, name, description, type1, type2, abilities, abilitiesCount,
+                   weight, height, captureRate, isLegendary, captureDate);
         }
     }
 
-    // Verificar se o Pokémon foi encontrado
+    fclose(file);
+
     if (!found)
     {
         printf("Pokémon com ID %d não encontrado.\n", id);
     }
 
-    // Fechar o arquivo
-    fclose(file);
-
-    // Retornar o Pokémon preenchido
     return p;
 }
 
