@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Pokemon",
+      "request": "launch",
+      "mainClass": "Verde.TP03.Q01.Pokemon",
+      "projectName": "AEDS02_4aa2f48a"
+    },
+    {
+      "type": "java",
       "name": "PrincipalLista",
       "request": "launch",
       "mainClass": "Unidade04.ListaSimples.PrincipalLista",
