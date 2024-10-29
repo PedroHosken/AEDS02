@@ -311,7 +311,7 @@ public class Pokemon {
         Pokemon novo = null;
         String linha = "";
         BufferedReader br = null;
-        String path = "C:/Users/1465660/Documents/GitHub/AEDS02/Verde/TP03/Q01/pokemon.csv";
+        String path = "C:/Users/User11/Documents/AEDS02/Verde/TP03/Q01/pokemon.csv";
         // "C:/Users/User11/Documents/AEDS02/Verde/TP02/Q01/pokemon.csv"; //
         // certifique-se de que este : /tmp/pokemon.csv
 
@@ -600,14 +600,16 @@ public class Pokemon {
     }
 
     /**
-     * Metódo de Inserir Ínicio
-     * Objetivo: Inserir o pokemon no ínicio da Lista e movimentar o restante
-     * Como: vamos passar o id, formar o pokemon dentro do metódo, movimentar os
-     * pokemons para as demais casas e por fim inserir ele no ínicio
+     * Metódo de Inserir
+     * Objetivo: Inserir o pokemon na posição desejada e mover o restante das
+     * posições
+     * Como: vamos passar o id, formar o pokemon dentro do metódo, verificar se
+     * posição é válida, para depois inserir e movimentarmos
      * 
      * 
      * @param int             id
      * @param Array<Pokemons> lista
+     * @param int             pos
      * 
      * @var Pokemon p - pokemon a ser inserido
      * @var Pokemon u - ultimo pokemon da Lista
@@ -615,19 +617,132 @@ public class Pokemon {
      * @var int i - controle da lista
      */
 
-    static void inserirInicio(ArrayList<Pokemon> lista, int id) {
-        // definir dados
-        Pokemon p = new Pokemon();
-        p = p.ler(id);// cria o pokemon a partir do id lido
-        int n = lista.size();// total da lista
-        // Adicionar uma nova posição no final da lista
-        lista.add(null); // Adiciona um espaço no final
-        // levar elementos para o fim da Lista
-        for (int i = n; i > 0; i--) {
-            lista.set(i, lista.get(i - 1));
+    static void inserir(ArrayList<Pokemon> lista, int pos, int id) {
+        if (pos > lista.size() || pos < 0) {
+            System.out.println("ERRO, POSIÇÃO INVÁLIDA");
+        } else {
+            // definir dados
+            Pokemon p = new Pokemon();
+            p = p.ler(id);// cria o pokemon a partir do id lido
+            int n = lista.size();// total da lista
+            pos = pos - 1; // para alocar na posição correta da lista
+            // Adicionar uma nova posição no final da lista
+            lista.add(null); // Adiciona um espaço no final
+            // levar elementos para o fim da Lista
+            for (int i = n; i > pos; i--) {
+                lista.set(i, lista.get(i - 1));
+            }
+            // adicionar pokemón no ínicio da Lista
+            lista.set(pos, p);
         }
-        // adicionar pokemón no ínicio da Lista
-        lista.set(0, p);
+
+    }
+
+    /**
+     * Metódo de Remover Fim
+     * Objetivo: Retirar o último pokemon da lista
+     * Como: fazer teste para lista nula, depois apenas retirar o ultimo pokemon.
+     * 
+     * 
+     * @param Array<Pokemons> lista
+     * 
+     * @var Pokemon u - ultimo pokemon da Lista
+     * @var int n - tamanho total da lista - 1
+     * 
+     */
+
+    static void removerFim(ArrayList<Pokemon> lista) {
+        // testar se lista é ou não nula
+        if (lista.size() == 0) {
+            System.out.println("ERRO, LISTA NULA");
+        } else {
+            int n = lista.size() - 1; // variavel de controle do ultimo elemento
+            lista.remove(n);
+        }
+
+    }
+
+    /**
+     * Metódo de Remover Ínicio
+     * Objetivo: Retirar o pokemon do ínicio da Lista
+     * Como: testar se lista é nula, ou se tema apenas 1 elemento, depois retirar e
+     * movimentar as casas para direita
+     * 
+     * 
+     * @param Array<Pokemons> lista
+     * 
+     * @var int n - tamanho total da lista
+     * @var int i - controle da lista
+     * 
+     */
+
+    static void removerInicio(ArrayList<Pokemon> lista) {
+        if (lista.size() == 0) {
+            System.out.println("Erro lista vazia");
+        } else {
+            if (lista.size() == 1) {
+                lista.remove(0);
+            } else {
+                // definir dados
+                int n = lista.size();// total da lista
+                // remover o primeiro da lista
+                lista.remove(0);
+                // andar com restante das casas para esquerda
+                // levar elementos para o fim da Lista
+                for (int i = 0; i > n - 1; i++) {
+                    lista.set(i, lista.get(i + 1));
+                }
+
+            }
+        }
+
+    }
+
+    /**
+     * Metódo de Remover
+     * Objetivo: Remover o posição indicada
+     * Como: verificar se posição é válida, se lista não é nula, caso seja indice 0
+     * ou ultimo, para depois remover e movimentarmos, caso necessário.
+     * 
+     * 
+     * @param Array<Pokemons> lista
+     * @param int             pos
+     * 
+     * @var int n - tamanho total da lista
+     * @var int i - controle da lista
+     * 
+     */
+
+    static void remover(ArrayList<Pokemon> lista, int pos) {
+        if (pos > lista.size() || pos < 0) { // teste de posição
+            System.out.println("ERRO, POSIÇÃO INVÁLIDA");
+        } else {
+            if (lista.size() == 0) { // teste de lista vazia
+                System.out.println("ERRO LISTA VAZIA");
+            } else {
+                if (pos == 0) {
+                    removerInicio(lista);
+                } else {
+                    if (pos == lista.size() ) {
+                        removerFim(lista);
+                    } else {
+                        // definir dados
+                        int n = lista.size();// total da lista
+                        pos = pos - 1; // para alocar na posição correta da lista
+                        // remover pokemon da posição
+                        lista.remove(pos);
+                        /*
+                         * // movimentar casas para esquerda
+                         * for (int i = pos; i < ; i++) {
+                         * lista.set(i, lista.get(i + 1));
+                         * }
+                         */
+
+                    }
+                }
+
+            }
+        }
 
     }
 
@@ -641,7 +756,10 @@ public class Pokemon {
      * 
      *          1.INSERIR Ínicio = CERTO
      *          2.inserir fim = certo
-     *          3.Inserir
+     *          3.Inserir = certo
+     *          4.Removerfim = certo
+     *          5.Removerinicio = certo
+     *          6.Remover = certo
      * 
      * @var String linha - para leitura de entradas
      * @var int proucurado - id que vamos formar o pokemon
@@ -650,6 +768,7 @@ public class Pokemon {
      * @var ArrayList<Pokemon> lista - lista de Pokemons
      * @var int i - controle do array
      * @var Scanner sc - para leitura
+     * 
      */
 
     public static void main(String args[]) {
@@ -682,7 +801,7 @@ public class Pokemon {
         }
         System.out.println("");
 
-        inserirFim(lista, 20);
+        remover(lista, 3);
 
         // TESTE - INSERIR fim
         for (Pokemon p : lista) {

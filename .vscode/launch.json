@@ -6,6 +6,13 @@
       "name": "Pokemon",
       "request": "launch",
       "mainClass": "Verde.TP03.Q01.Pokemon",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
+      "name": "Pokemon",
+      "request": "launch",
+      "mainClass": "Verde.TP03.Q01.Pokemon",
       "projectName": "AEDS02_4aa2f48a"
     },
     {
