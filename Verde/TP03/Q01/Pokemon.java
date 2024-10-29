@@ -723,7 +723,7 @@ public class Pokemon {
                 if (pos == 0) {
                     removerInicio(lista);
                 } else {
-                    if (pos == lista.size() ) {
+                    if (pos == lista.size()) {
                         removerFim(lista);
                     } else {
                         // definir dados
@@ -760,6 +760,9 @@ public class Pokemon {
      *          4.Removerfim = certo
      *          5.Removerinicio = certo
      *          6.Remover = certo
+     * @version 3 - ler quantidade de comandos, ler o comando especifico e chamar
+     *          seu respectivo:
+     *          1.II =
      * 
      * @var String linha - para leitura de entradas
      * @var int proucurado - id que vamos formar o pokemon
@@ -768,6 +771,10 @@ public class Pokemon {
      * @var ArrayList<Pokemon> lista - lista de Pokemons
      * @var int i - controle do array
      * @var Scanner sc - para leitura
+     * @var int cmd - quantidade total de comandos
+     * @var int pos - posição
+     * @var int id - id passado
+     * @var String[] dados - dados coletados da leitura da linha
      * 
      */
 
@@ -776,10 +783,13 @@ public class Pokemon {
         String linha = "";
         int proucurado = 0;
         int i = 0;
+        int cmd = 0;
         Pokemon leitor = new Pokemon();
         Pokemon resultado = null;
         ArrayList<Pokemon> lista = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
+        int id = 0;
+        int pos = 0;
         // ler ids, while diferente de FIM para formar primeira LISTA
         linha = sc.nextLine();
         while (!linha.equals("FIM")) {
@@ -801,7 +811,46 @@ public class Pokemon {
         }
         System.out.println("");
 
-        remover(lista, 3);
+        // ler quantidade de comandos
+        linha = sc.nextLine();
+        cmd = Integer.parseInt(linha); // passa para inteiro
+        // fazer metodos de forma iterativa
+        for (int x = 0; x < cmd; x++) {
+            linha = sc.nextLine();
+            // coletar dados da linha lida
+            String[] dados = linha.split(" "); // separada por espaços vazios
+            // fazer os respectivos testes
+            if (dados[0].equals("II")) {
+                id = Integer.parseInt(dados[1]);
+                inserirInicio(lista, id);
+            } else {
+                if (dados[0].equals("IF")) {
+                    id = Integer.parseInt(dados[1]);
+                    inserirFim(lista, id);
+                } else {
+                    if (dados[0].equals("I*")) {
+                        pos = Integer.parseInt(dados[1]);
+                        id = Integer.parseInt(dados[2]);
+                        inserir(lista, pos, id);
+                    } else {
+                        if (dados[0].equals("RI")) {
+                            removerInicio(lista);
+                        } else {
+                            if (dados[0].equals("RF")) {
+                                removerFim(lista);
+                            } else {
+                                if (dados[0].equals("R*")) {
+                                    pos = Integer.parseInt(dados[1]);
+                                    remover(lista, pos);
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+
+        }
 
         // TESTE - INSERIR fim
         for (Pokemon p : lista) {
