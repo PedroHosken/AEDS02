@@ -2,10 +2,10 @@ package Verde.TP03.Q01;
 
 /**
  * Lista de Pokemons e seus Metódos
+ *
  * @author Pedro Hosken - 816561
  * @version 1.0 - 22/10/2024
  */
-
 // ----------- Dependências --------- //
 import java.util.*;
 import java.io.*;
@@ -13,17 +13,15 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 
 public class Pokemon {
+
     /**
      * Atributos privados da Classe
-     * 
-     * Sua classe tera os atributos privado id (int),
-     * generation (int), name (String), description (String), types (Lista)1
-     * , abilities (Lista),
-     * weight (double), height (double), captureRate (int), isLegendary (boolean),
-     * captureDate
-     * (Date)
+     *
+     * Sua classe tera os atributos privado id (int), generation (int), name
+     * (String), description (String), types (Lista)1 , abilities (Lista),
+     * weight (double), height (double), captureRate (int), isLegendary
+     * (boolean), captureDate (Date)
      */
-
     private int id;
     private int generation;
     private int captureRate;
@@ -38,25 +36,23 @@ public class Pokemon {
     private Date captureDate;
 
     /**
-     * Construtores da Classe
-     * Sua classe tambem tera pelo menos dois construtores
-     * Construtor sem e com parametros
-     * 
-     * @param int          id
-     * @param int          generation
-     * @param String       name
-     * @param Srting       description
-     * @param String       type1
-     * @param String       type2
+     * Construtores da Classe Sua classe tambem tera pelo menos dois
+     * construtores Construtor sem e com parametros
+     *
+     * @param int id
+     * @param int generation
+     * @param String name
+     * @param Srting description
+     * @param String type1
+     * @param String type2
      * @param List<String> abilities
-     * @param double       weight
-     * @param double       height
-     * @param int          captureRate
-     * @param boolean      isLegendary
-     * @param Date         captureDate
-     * 
+     * @param double weight
+     * @param double height
+     * @param int captureRate
+     * @param boolean isLegendary
+     * @param Date captureDate
+     *
      */
-
     public Pokemon() {
         this.id = 0;
         this.generation = 0;
@@ -91,10 +87,8 @@ public class Pokemon {
     }
 
     /**
-     * Metódos Get e Set do id
-     * Metódos para instanciar e buscar na classe
+     * Metódos Get e Set do id Metódos para instanciar e buscar na classe
      */
-
     public int getId() {
         return this.id;
     }
@@ -104,10 +98,9 @@ public class Pokemon {
     }
 
     /**
-     * Metódos Get e Set do generation
-     * Metódos para instanciar e buscar na classe
+     * Metódos Get e Set do generation Metódos para instanciar e buscar na
+     * classe
      */
-
     public int getGeneration() {
         return this.generation;
     }
@@ -117,10 +110,8 @@ public class Pokemon {
     }
 
     /**
-     * Metódos Get e Set do Name
-     * Metódos para instanciar e buscar na classe
+     * Metódos Get e Set do Name Metódos para instanciar e buscar na classe
      */
-
     public String getName() {
         return this.name;
     }
@@ -130,10 +121,9 @@ public class Pokemon {
     }
 
     /**
-     * Metódos Get e Set do Description
-     * Metódos para instanciar e buscar na classe
+     * Metódos Get e Set do Description Metódos para instanciar e buscar na
+     * classe
      */
-
     public String getDescription() {
         return this.description;
     }
@@ -143,10 +133,8 @@ public class Pokemon {
     }
 
     /**
-     * Metódos Get e Set do type1
-     * Metódos para instanciar e buscar na classe
+     * Metódos Get e Set do type1 Metódos para instanciar e buscar na classe
      */
-
     public String getType1() {
         return this.type1;
     }
@@ -156,10 +144,8 @@ public class Pokemon {
     }
 
     /**
-     * Metódos Get e Set do type2
-     * Metódos para instanciar e buscar na classe
+     * Metódos Get e Set do type2 Metódos para instanciar e buscar na classe
      */
-
     public String getType2() {
         return this.type2;
     }
@@ -169,8 +155,7 @@ public class Pokemon {
     }
 
     /**
-     * Metódos Set e Get de Abilities
-     * Para instanciar e recuperar
+     * Metódos Set e Get de Abilities Para instanciar e recuperar
      */
     public List<String> getAbilities() {
         return this.abilities;
@@ -181,8 +166,7 @@ public class Pokemon {
     }
 
     /**
-     * Metódos Get e Set do weight
-     * Metódos para instanciar e buscar na classe
+     * Metódos Get e Set do weight Metódos para instanciar e buscar na classe
      */
     public double getWeight() {
         return this.weight;
@@ -193,8 +177,7 @@ public class Pokemon {
     }
 
     /**
-     * Metódos Get e Set do height
-     * Metódos para instanciar e buscar na classe
+     * Metódos Get e Set do height Metódos para instanciar e buscar na classe
      */
     public double getHeight() {
         return this.height;
@@ -205,8 +188,8 @@ public class Pokemon {
     }
 
     /**
-     * Metódos Get e Set do captureRate
-     * Metódos para instanciar e buscar na classe
+     * Metódos Get e Set do captureRate Metódos para instanciar e buscar na
+     * classe
      */
     public int getCaptureRate() {
         return this.captureRate;
@@ -217,8 +200,8 @@ public class Pokemon {
     }
 
     /**
-     * Metódos Get e Set do isLegendary
-     * Metódos para instanciar e buscar na classe
+     * Metódos Get e Set do isLegendary Metódos para instanciar e buscar na
+     * classe
      */
     public boolean isLegendary() {
         return this.isLegendary;
@@ -229,8 +212,8 @@ public class Pokemon {
     }
 
     /**
-     * Metódos Get e Set do CaptureDate
-     * Metódos para instanciar e buscar na classe
+     * Metódos Get e Set do CaptureDate Metódos para instanciar e buscar na
+     * classe
      */
     public Date getCaptureDate() {
         return this.captureDate;
@@ -241,14 +224,13 @@ public class Pokemon {
     }
 
     /**
-     * Metódo de Clone
-     * Criar novo objeto com os mesmos atributos, receber atributos
-     * 
+     * Metódo de Clone Criar novo objeto com os mesmos atributos, receber
+     * atributos
+     *
      * @var Pokemon clone
      * @return clone
-     * 
+     *
      */
-
     public Pokemon clone() {
         // definir dados
         Pokemon clone = new Pokemon();
@@ -271,15 +253,13 @@ public class Pokemon {
     }
 
     /**
-     * Metódo de Imprimir
-     * O metodo imprimir mostra os atributos do registro (ver cada linha da saída
-     * padrão)
-     * [#181 -> Ampharos: Light Pokémon - ['electric'] - ['Static', 'Plus'] - 61.5kg
-     * - 1.4m - 45% - false - 2 gen] - 25/05/1999
-     * 
+     * Metódo de Imprimir O metodo imprimir mostra os atributos do registro (ver
+     * cada linha da saída padrão) [#181 -> Ampharos: Light Pokémon -
+     * ['electric'] - ['Static', 'Plus'] - 61.5kg - 1.4m - 45% - false - 2 gen]
+     * - 25/05/1999
+     *
      * @return String
      */
-
     public String imprimir() {
         return "[#" + id + " -> " + name + ": " + description + " - ['" + type1
                 + (type2 != null ? "', '" + type2 + "']" : "']") + " - ['" + String.join("', '", abilities) + "']"
@@ -290,13 +270,13 @@ public class Pokemon {
     }
 
     /**
-     * Metódo de Leitura
-     * Objetivo: a partir do id, ler arquivo csv em busca desse id, criar um novo
-     * objeto pokemon e guardar os atributos daquele id nele e retornar
-     * 
+     * Metódo de Leitura Objetivo: a partir do id, ler arquivo csv em busca
+     * desse id, criar um novo objeto pokemon e guardar os atributos daquele id
+     * nele e retornar
+     *
      * @param int id
      * @return Pokemon novo
-     * 
+     *
      * @var String path
      * @var Pokemon novo
      * @var BufferedReader br
@@ -305,13 +285,12 @@ public class Pokemon {
      * @var String[] dados
      * @var int idarquivo
      */
-
     public Pokemon ler(int id) {
         // definir dados
         Pokemon novo = null;
         String linha = "";
         BufferedReader br = null;
-        String path = "C:/Users/User11/Documents/AEDS02/Verde/TP03/Q01/pokemon.csv";
+        String path = "/tmp/pokemon.csv";
         // "C:/Users/User11/Documents/AEDS02/Verde/TP02/Q01/pokemon.csv"; //
         // certifique-se de que este : /tmp/pokemon.csv
 
@@ -365,8 +344,9 @@ public class Pokemon {
             e.printStackTrace();
         } finally {
             try {
-                if (br != null)
+                if (br != null) {
                     br.close();
+                }
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -376,14 +356,13 @@ public class Pokemon {
     }
 
     /**
-     * Metódo de Pesquisa Sequencial
-     * Objetivo: Usar algoritmo de PS, verificando se há pokemon com aqule nome no
-     * Array
-     * 
-     * @param name  String
+     * Metódo de Pesquisa Sequencial Objetivo: Usar algoritmo de PS, verificando
+     * se há pokemon com aqule nome no Array
+     *
+     * @param name String
      * @param lista Array List
      * @return boolean is
-     * 
+     *
      * @var boolean is - teste se há ou não
      * @var Pokemon p - usamos para captar o da lista e ser verificado
      * @var String n2 - nome do pokemon da lista
@@ -405,17 +384,15 @@ public class Pokemon {
     }
 
     /**
-     * Metódo Swap
-     * Trocar elementos dentro da Lista
-     * 
-     * 
+     * Metódo Swap Trocar elementos dentro da Lista
+     *
+     *
      * @param Array<Pokemons> lista
-     * @param int             menor
-     * @param int             j
-     * 
+     * @param int menor
+     * @param int j
+     *
      * @var Pokemon temp - uso de pokemon temporario
      */
-
     static void swap(ArrayList<Pokemon> lista, int menor, int i) {
         // Armazena o elemento em i temporariamente
         Pokemon temp = lista.get(menor);
@@ -426,18 +403,16 @@ public class Pokemon {
     }
 
     /**
-     * Metódo de Ordenação por Seleção
-     * Chave: Pokemon.name
-     * Objetivo: ordenar os pokemons pelo seus nomes de maneira crescente
-     * 
+     * Metódo de Ordenação por Seleção Chave: Pokemon.name Objetivo: ordenar os
+     * pokemons pelo seus nomes de maneira crescente
+     *
      * @param Array<Pokemons> lista de pokemons
-     * 
+     *
      * @var int n - tamanho da lista
      * @var Pokemon p1 - vem da posição menor
      * @var Pokemon p2 - vem depois da menor
-     * 
+     *
      */
-
     static void ordSelecao(ArrayList<Pokemon> lista) {
         // definir dados
         int n = lista.size();
@@ -457,18 +432,17 @@ public class Pokemon {
     }
 
     /**
-     * Metódo de Ordenação por Inserção
-     * Chave: Pokemon.captureDate, caso empate : pokemon.name
-     * Objetivo: ordenar os pokemons por suas datas de Captura de maneira crescente
-     * 
+     * Metódo de Ordenação por Inserção Chave: Pokemon.captureDate, caso empate
+     * : pokemon.name Objetivo: ordenar os pokemons por suas datas de Captura de
+     * maneira crescente
+     *
      * @param Array<Pokemons> lista de pokemons
-     * 
+     *
      * @var int n - tamanho da lista
      * @var Pokemon tmp - vem da posição i
      * @var Pokemon tmp2 - vem da posição j
-     * 
+     *
      */
-
     static void ordInsercao(ArrayList<Pokemon> lista) {
         // definir dados
         int n = lista.size();
@@ -478,9 +452,9 @@ public class Pokemon {
             Pokemon tmp = lista.get(i);
             int j = i - 1;
             // Loop para mover os elementos maiores que `tmp` para frente
-            while (j >= 0 && (lista.get(j).getCaptureDate().compareTo(tmp.getCaptureDate()) > 0 ||
-                    (lista.get(j).getCaptureDate().compareTo(tmp.getCaptureDate()) == 0 &&
-                            lista.get(j).getName().compareTo(tmp.getName()) > 0))) { // caso empate
+            while (j >= 0 && (lista.get(j).getCaptureDate().compareTo(tmp.getCaptureDate()) > 0
+                    || (lista.get(j).getCaptureDate().compareTo(tmp.getCaptureDate()) == 0
+                    && lista.get(j).getName().compareTo(tmp.getName()) > 0))) { // caso empate
                 lista.set(j + 1, lista.get(j));
                 j--;
             }
@@ -490,15 +464,15 @@ public class Pokemon {
     }
 
     /**
-     * Metódo de Ordenação por Heapsort
-     * Objetivo: ordenar elementos da lista construindo o heap e depois ordenar
-     * Chave: height, caso empate vamos usar nome
-     * 
+     * Metódo de Ordenação por Heapsort Objetivo: ordenar elementos da lista
+     * construindo o heap e depois ordenar Chave: height, caso empate vamos usar
+     * nome
+     *
      * @param Array<Pokemons> - lista de pokemons
-     * @param int             n - tamanho da lista
-     * 
+     * @param int n - tamanho da lista
+     *
      * @var Array<Pokemon> lista2 - lista copiada
-     * 
+     *
      */
     static void heapSort(ArrayList<Pokemon> lista) {
         int n = lista.size();
@@ -544,21 +518,20 @@ public class Pokemon {
     }
 
     /**
-     * Metódo de Inserir Ínicio
-     * Objetivo: Inserir o pokemon no ínicio da Lista e movimentar o restante
-     * Como: vamos passar o id, formar o pokemon dentro do metódo, movimentar os
-     * pokemons para as demais casas e por fim inserir ele no ínicio
-     * 
-     * 
-     * @param int             id
+     * Metódo de Inserir Ínicio Objetivo: Inserir o pokemon no ínicio da Lista e
+     * movimentar o restante Como: vamos passar o id, formar o pokemon dentro do
+     * metódo, movimentar os pokemons para as demais casas e por fim inserir ele
+     * no ínicio
+     *
+     *
+     * @param int id
      * @param Array<Pokemons> lista
-     * 
+     *
      * @var Pokemon p - pokemon a ser inserido
      * @var Pokemon u - ultimo pokemon da Lista
      * @var int n - tamanho total da lista
      * @var int i - controle da lista
      */
-
     static void inserirInicio(ArrayList<Pokemon> lista, int id) {
         // definir dados
         Pokemon p = new Pokemon();
@@ -576,21 +549,18 @@ public class Pokemon {
     }
 
     /**
-     * Metódo de Inserir Fim
-     * Objetivo: Inserir o pokemon no final da Lista
-     * Como: vamos passar o id, formar o pokemon dentro do metódo e adiona-lo ao
-     * final
-     * 
-     * 
-     * @param int             id
+     * Metódo de Inserir Fim Objetivo: Inserir o pokemon no final da Lista Como:
+     * vamos passar o id, formar o pokemon dentro do metódo e adiona-lo ao final
+     *
+     *
+     * @param int id
      * @param Array<Pokemons> lista
-     * 
+     *
      * @var Pokemon p - pokemon a ser inserido
      * @var Pokemon u - ultimo pokemon da Lista
      * @var int n - tamanho total da lista
      * @var int i - controle da lista
      */
-
     static void inserirFim(ArrayList<Pokemon> lista, int id) {
         // definir dados
         Pokemon p = new Pokemon();
@@ -600,23 +570,21 @@ public class Pokemon {
     }
 
     /**
-     * Metódo de Inserir
-     * Objetivo: Inserir o pokemon na posição desejada e mover o restante das
-     * posições
-     * Como: vamos passar o id, formar o pokemon dentro do metódo, verificar se
-     * posição é válida, para depois inserir e movimentarmos
-     * 
-     * 
-     * @param int             id
+     * Metódo de Inserir Objetivo: Inserir o pokemon na posição desejada e mover
+     * o restante das posições Como: vamos passar o id, formar o pokemon dentro
+     * do metódo, verificar se posição é válida, para depois inserir e
+     * movimentarmos
+     *
+     *
+     * @param int id
      * @param Array<Pokemons> lista
-     * @param int             pos
-     * 
+     * @param int pos
+     *
      * @var Pokemon p - pokemon a ser inserido
      * @var Pokemon u - ultimo pokemon da Lista
      * @var int n - tamanho total da lista
      * @var int i - controle da lista
      */
-
     static void inserir(ArrayList<Pokemon> lista, int pos, int id) {
         if (pos > lista.size() || pos < 0) {
             System.out.println("ERRO, POSIÇÃO INVÁLIDA");
@@ -639,43 +607,40 @@ public class Pokemon {
     }
 
     /**
-     * Metódo de Remover Fim
-     * Objetivo: Retirar o último pokemon da lista
-     * Como: fazer teste para lista nula, depois apenas retirar o ultimo pokemon.
-     * 
-     * 
+     * Metódo de Remover Fim Objetivo: Retirar o último pokemon da lista Como:
+     * fazer teste para lista nula, depois apenas retirar o ultimo pokemon.
+     *
+     *
      * @param Array<Pokemons> lista
-     * 
+     *
      * @var Pokemon u - ultimo pokemon da Lista
      * @var int n - tamanho total da lista - 1
-     * 
+     *
      */
-
     static void removerFim(ArrayList<Pokemon> lista) {
         // testar se lista é ou não nula
         if (lista.size() == 0) {
             System.out.println("ERRO, LISTA NULA");
         } else {
             int n = lista.size() - 1; // variavel de controle do ultimo elemento
+            System.out.println("(R) " + lista.get(n).name);// printar nome do pokemon removido
             lista.remove(n);
         }
 
     }
 
     /**
-     * Metódo de Remover Ínicio
-     * Objetivo: Retirar o pokemon do ínicio da Lista
-     * Como: testar se lista é nula, ou se tema apenas 1 elemento, depois retirar e
-     * movimentar as casas para direita
-     * 
-     * 
+     * Metódo de Remover Ínicio Objetivo: Retirar o pokemon do ínicio da Lista
+     * Como: testar se lista é nula, ou se tema apenas 1 elemento, depois
+     * retirar e movimentar as casas para direita
+     *
+     *
      * @param Array<Pokemons> lista
-     * 
+     *
      * @var int n - tamanho total da lista
      * @var int i - controle da lista
-     * 
+     *
      */
-
     static void removerInicio(ArrayList<Pokemon> lista) {
         if (lista.size() == 0) {
             System.out.println("Erro lista vazia");
@@ -686,6 +651,7 @@ public class Pokemon {
                 // definir dados
                 int n = lista.size();// total da lista
                 // remover o primeiro da lista
+                System.out.println("(R) " + lista.get(0).name);// printar nome do pokemon removido
                 lista.remove(0);
                 // andar com restante das casas para esquerda
                 // levar elementos para o fim da Lista
@@ -699,20 +665,17 @@ public class Pokemon {
     }
 
     /**
-     * Metódo de Remover
-     * Objetivo: Remover o posição indicada
-     * Como: verificar se posição é válida, se lista não é nula, caso seja indice 0
-     * ou ultimo, para depois remover e movimentarmos, caso necessário.
-     * 
-     * 
+     * Metódo de Remover Objetivo: Remover o posição indicada Como: verificar se
+     * posição é válida, se lista não é nula, caso seja indice 0 ou ultimo, para
+     * depois remover e movimentarmos, caso necessário.
+     *
+     *
      * @param Array<Pokemons> lista
-     * @param int             pos
-     * 
-     * @var int n - tamanho total da lista
+     * @param int pos
+     *
      * @var int i - controle da lista
-     * 
+     *
      */
-
     static void remover(ArrayList<Pokemon> lista, int pos) {
         if (pos > lista.size() || pos < 0) { // teste de posição
             System.out.println("ERRO, POSIÇÃO INVÁLIDA");
@@ -727,8 +690,8 @@ public class Pokemon {
                         removerFim(lista);
                     } else {
                         // definir dados
-                        int n = lista.size();// total da lista
                         pos = pos - 1; // para alocar na posição correta da lista
+                        System.out.println("(R) " + lista.get(pos).name);// printar nome do pokemon removido
                         // remover pokemon da posição
                         lista.remove(pos);
                         /*
@@ -747,23 +710,23 @@ public class Pokemon {
     }
 
     /**
-     * Metódo Main
-     * Ler ids da entrada, criar pokemon a partir do csv, formar lista de pokemons e
-     * fazer metódos da Lista
-     * 
-     * @version 1 - teste de ler Id e formar array de pokemons dinamicamente - CERTO
+     * Metódo Main Ler ids da entrada, criar pokemon a partir do csv, formar
+     * lista de pokemons e fazer metódos da Lista
+     *
+     * @version 1 - teste de ler Id e formar array de pokemons dinamicamente -
+     * CERTO
      * @version 2 - Passar número de comandos e testar metódos da Lista -
-     * 
-     *          1.INSERIR Ínicio = CERTO
-     *          2.inserir fim = certo
-     *          3.Inserir = certo
-     *          4.Removerfim = certo
-     *          5.Removerinicio = certo
-     *          6.Remover = certo
-     * @version 3 - ler quantidade de comandos, ler o comando especifico e chamar
-     *          seu respectivo:
-     *          1.II =
-     * 
+     *
+     * 1.INSERIR Ínicio = CERTO 2.inserir fim = certo 3.Inserir = certo
+     * 4.Removerfim = certo 5.Removerinicio = certo 6.Remover = certo
+     * @version 3 - ler quantidade de comandos, ler o comando especifico e
+     * chamar seu respectivo: 1.II = certo 2.IF =certo 3.I* = certo 4.RI = certo
+     * 5.RF = certo 6.R* = certo
+     * @version 4 - corrigir metódo de remoção - imprimir nome do pokemon
+     * removido - CERTO
+     * @version 5 - corrigir metodo de impressão, imprimir posição ocupada na
+     * lista + seu pokemon - CERTO
+     *
      * @var String linha - para leitura de entradas
      * @var int proucurado - id que vamos formar o pokemon
      * @var Pokemon leitor - pokemon auxiliar
@@ -775,9 +738,8 @@ public class Pokemon {
      * @var int pos - posição
      * @var int id - id passado
      * @var String[] dados - dados coletados da leitura da linha
-     * 
+     *
      */
-
     public static void main(String args[]) {
         // definir dados
         String linha = "";
@@ -804,13 +766,6 @@ public class Pokemon {
             }
             linha = sc.nextLine();
         }
-
-        // Teste Inserir -
-        for (Pokemon p : lista) {
-            System.out.println(p.imprimir());
-        }
-        System.out.println("");
-
         // ler quantidade de comandos
         linha = sc.nextLine();
         cmd = Integer.parseInt(linha); // passa para inteiro
@@ -851,10 +806,12 @@ public class Pokemon {
             }
 
         }
-
+        int M = 0;
         // TESTE - INSERIR fim
         for (Pokemon p : lista) {
+            System.out.print("[" + M + "] ");
             System.out.println(p.imprimir());
+            M++;
         }
         // fechar scanner
         sc.close();
@@ -862,42 +819,31 @@ public class Pokemon {
     }
 
     /**
-     * Testes realizados
-     * Colocar por versões e o que está sendo testado
-     * 
-     * 
-     * // TESTE - PRINTAR LISTA - OK
-     * for (Pokemon p : lista) {
-     * System.out.println(p.imprimir());
-     * }
-     * System.out.println("");
-     * 
-     * // TESTE - INSERIR ÍNICIO
-     * for (Pokemon p : lista) {
-     * System.out.println(p.imprimir());
-     * }
-     * System.out.println("");
-     * 
+     * Testes realizados Colocar por versões e o que está sendo testado
+     *
+     *
+     * // TESTE - PRINTAR LISTA - OK for (Pokemon p : lista) {
+     * System.out.println(p.imprimir()); } System.out.println("");
+     *
+     * // TESTE - INSERIR ÍNICIO for (Pokemon p : lista) {
+     * System.out.println(p.imprimir()); } System.out.println("");
+     *
      * inserirInicio(lista, 20);
-     * 
-     * // TESTE - INSERIR ÍNICIO
-     * for (Pokemon p : lista) {
-     * System.out.println(p.imprimir());
-     * }
-     * System.out.println("");
-     * 
-     * // Teste Inserir Fim - CERTO
-     * for (Pokemon p : lista) {
-     * System.out.println(p.imprimir());
-     * }
-     * System.out.println("");
-     * 
+     *
+     * // TESTE - INSERIR ÍNICIO for (Pokemon p : lista) {
+     * System.out.println(p.imprimir()); } System.out.println("");
+     *
+     * // Teste Inserir Fim - CERTO for (Pokemon p : lista) {
+     * System.out.println(p.imprimir()); } System.out.println("");
+     *
      * inserirFim(lista, 20);
-     * 
-     * // TESTE - INSERIR fim
-     * for (Pokemon p : lista) {
-     * System.out.println(p.imprimir());
-     * }
+     *
+     * // TESTE - INSERIR fim for (Pokemon p : lista) {
+     * System.out.println(p.imprimir()); }
+     *
+     * int K = 0; // Teste Inserir - for (Pokemon p : lista) {
+     * System.out.print("[" + K + "] "); System.out.println(p.imprimir()); K++;
+     * } System.out.println("");
+     *
      */
-
 }
