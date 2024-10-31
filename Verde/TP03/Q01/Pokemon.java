@@ -593,7 +593,7 @@ public class Pokemon {
             Pokemon p = new Pokemon();
             p = p.ler(id);// cria o pokemon a partir do id lido
             int n = lista.size();// total da lista
-            pos = pos - 1; // para alocar na posição correta da lista
+            //pos = pos - 1; // para alocar na posição correta da lista
             // Adicionar uma nova posição no final da lista
             lista.add(null); // Adiciona um espaço no final
             // levar elementos para o fim da Lista
@@ -690,7 +690,7 @@ public class Pokemon {
                         removerFim(lista);
                     } else {
                         // definir dados
-                        pos = pos - 1; // para alocar na posição correta da lista
+                        //pos = pos - 1; // para alocar na posição correta da lista
                         System.out.println("(R) " + lista.get(pos).name);// printar nome do pokemon removido
                         // remover pokemon da posição
                         lista.remove(pos);
