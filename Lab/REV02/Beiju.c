@@ -28,10 +28,14 @@
  * @var int tam - tamanho total da string
  * @var int i - controle
  * @var int x - controle
+ * @var int b - inicio de beiju na string ext
+ * @var int tam2 - tamanho da inte
  *
  * @version 1 - testar dados definidos, leitura da linha ext e seu print - OK
  * @version 2 - buscar por parenteses e formar linha interna, percorrer
- * iterativamente
+ * iterativamente e printar - OK
+ * @version 3 - retirar beiju e colocar _ - OK
+ *
  *
  */
 
@@ -41,6 +45,8 @@ int main()
     char ext[MAX];
     char inte[MAX - 2]; // abre e fecha []
     int tam = 0;
+    int b = 0;
+    int tam2 = 0;
     // ler externa
     scanf("%s", ext);
     getchar();
@@ -50,6 +56,7 @@ int main()
     {
         if (ext[i] == '[') // achou Beiju
         {
+            b = i;         // atualiza inicio de beiju
             int x = i + 1; // atualiza i
             // formar linha interna
             while (ext[x] != ']')
@@ -57,11 +64,21 @@ int main()
                 // testes de casos especiais
                 if (ext[x] != '[' && ext[x] != ']')
                 {
-                    
+                    strncat(inte, &ext[x], 1); // forma linha interna
                 }
+                x = x + 1; // anda com x
             }
         }
     }
+    // substituir parte de beiju por _ na original e deslcoar
+    tam2 = strlen(inte);
+    ext[b] = '_'; // substitui por _
+    // Deslocar o restante da string para a esquerda até ']'
+    for (int i = b + 1; i <= tam - tam2 + 1; i++)
+    {
+        ext[i] = ext[i + tam2 + 1]; // corrigido e atualizado
+    }
+    printf("%s - %s\n", inte, ext);
 
     // return
     return 0;
@@ -71,5 +88,7 @@ int main()
  * TESTES
  * @version 1 -
  * printf("%s\n", ext);
+ * @version 2 -
+ * printf("%s - %s\n", inte, ext);
  *
  */
