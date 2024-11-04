@@ -6,6 +6,13 @@
       "name": "Van",
       "request": "launch",
       "mainClass": "Lab.REV02.Van",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
+      "name": "Van",
+      "request": "launch",
+      "mainClass": "Lab.REV02.Van",
       "projectName": "AEDS02_4aa2f48a"
     },
     {
