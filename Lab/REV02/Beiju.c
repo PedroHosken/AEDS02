@@ -35,6 +35,8 @@
  * @version 2 - buscar por parenteses e formar linha interna, percorrer
  * iterativamente e printar - OK
  * @version 3 - retirar beiju e colocar _ - OK
+ * @version 4 - desclocar biju para o inicio do array e printar,
+ * respeitar casos especiais - OK
  *
  *
  */
@@ -70,15 +72,35 @@ int main()
             }
         }
     }
-    // substituir parte de beiju por _ na original e deslcoar
-    tam2 = strlen(inte);
-    ext[b] = '_'; // substitui por _
-    // Deslocar o restante da string para a esquerda até ']'
-    for (int i = b + 1; i <= tam - tam2 + 1; i++)
+    if (inte != NULL && inte[0] != '\0')
     {
-        ext[i] = ext[i + tam2 + 1]; // corrigido e atualizado
+        // substituir parte de beiju por _ na original e deslcoar
+        tam2 = strlen(inte);
+        ext[b] = '_'; // substitui por _
+        // Deslocar o restante da string para a esquerda até ']'
+        for (int i = b + 1; i <= tam - tam2 + 1; i++)
+        {
+            ext[i] = ext[i + tam2 + 1]; // corrigido e atualizado
+        }
+        printf("%s%s\n", inte, ext); // printa na nova ordem
     }
-    printf("%s - %s\n", inte, ext);
+    else
+    {
+        tam2 = strlen(inte);
+        // Deslocar o restante da string para a esquerda até ']'
+        for (int i = b; i <= tam - tam2 + 1; i++)
+        {
+            ext[i] = ext[i + tam2 + 2]; // corrigido e atualizado
+        }
+        if (strcmp(ext, "[]") == 0)
+        {
+            
+        }
+        else
+        {
+            printf("%s\n", ext); // printa apenas ext
+        }
+    }
 
     // return
     return 0;
