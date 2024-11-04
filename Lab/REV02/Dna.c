@@ -54,7 +54,8 @@ int compare(int s, int *sq, int *id)
  * @var int mov - numero de movimentações
  *
  * @version 1 - ler número de comp e fazer repetição iterativa - OK
- * @version 2 - chamar metodo de comparação entre arrays e retornar resposta -
+ * @version 2 - chamar metodo de comparação entre arrays e
+ * retornar resposta - OK
  */
 
 int main()
@@ -79,10 +80,10 @@ int main()
         int id[s]; // ideal
         for (int i = 1; i <= s; i++)
         {
-            id[i] = i;
+            id[i - 1] = i;
             scanf("%i", &nm);
             getchar();
-            sq[i] = nm;
+            sq[i - 1] = nm;
         }
         // chamar metódo de comparação entre arrays
         mov = compare(s, sq, id);
