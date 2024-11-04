@@ -55,7 +55,57 @@ class Van {
     static void imprimir(ArrayList<Van> lista) {
         // realizar metódo iterativo
         for (Van aluno : lista) {
-            System.out.println(aluno.name + " " + aluno.reg + " " + aluno.dist);
+            System.out.println(aluno.name); // atualizado
+        }
+    }
+
+    /**
+     * Metódo ord
+     * Objetivo: ordenar lista de alunos, por menor distancia de cada região, e caso
+     * empate, pelo nome
+     * Como: vamos utilizar o metódo de seleção para ordenar pro região, caso for a
+     * mesma, pela distancia, caso for a mesma, pelo nome
+     * 
+     * ordering the students from a distance (from lowest to highest), by region (in
+     * alphabetical order) and last by name.
+     * 
+     * @var Van tmp - variável auxiliar para fazermos as trocas
+     * @var int Menor - menro valor da lista, posição
+     * @var int i - variavél de controle
+     * @param args
+     */
+    static void ord(ArrayList<Van> lista) {
+        // algoritmo de seleção
+        for (int i = 0; i < lista.size() - 1; i++) {
+            int menor = i; // pega posição do aluno de primeiro valor
+            for (int j = (i + 1); j < lista.size(); j++) {
+                if (lista.get(menor).reg > lista.get(j).reg) { // comparação por REG
+                    menor = j; // atualiza posição do menor
+                } else {
+                    if (lista.get(menor).reg == lista.get(j).reg) { // MESMA REG
+                        if (lista.get(menor).dist > lista.get(j).dist) { // comp de DIST
+                            menor = j; // atualiza menor
+
+                        } else {
+                            if (lista.get(menor).dist == lista.get(j).dist) { // MESMA DIST
+                                if (lista.get(menor).name.compareTo(lista.get(j).name) > 0) {
+                                    menor = j; // atualiza menor
+                                }
+                            }
+
+                        }
+
+                    }
+                }
+
+            }
+            // metódo swap
+            Van tmp = lista.get(menor);
+            // Troca o elemento i pelo elemento j
+            lista.set(menor, lista.get(i));
+            // Coloca o valor temporário na posição j
+            lista.set(i, tmp);
+
         }
     }
 
@@ -86,7 +136,7 @@ class Van {
      *          OK
      * @version 4 - testar se está guradando na lista + metódo de imprimir - OK
      * @version 5 - realizar metódo de ordenação por menor distancia da região, e
-     *          caso empate, por nome
+     *          caso empate, por nome - OK
      * 
      */
     public static void main(String args[]) {
@@ -113,6 +163,7 @@ class Van {
             Van aluno = new Van(name, dist, R); // chama construtor
             lista.add(aluno);
         }
+        ord(lista); // chama metódo de ordenação
         imprimir(lista); // metódo de imprimir lista
 
         // fechar sc
