@@ -22,7 +22,9 @@ class PrincipalLista {
             lista.mostrar();
 
             Celula invertido = lista.ReverseNode(lista.primeiro);
-            lista.mostrar();
+            for(Celula i = invertido; i != null;  i = i.prox  ){
+                System.out.println(i.elemento);
+            }
         } catch (Exception erro) {
             System.out.println(erro.getMessage());
         }

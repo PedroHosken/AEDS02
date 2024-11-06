@@ -287,32 +287,28 @@ class Lista {
      * 
      */
     public Celula ReverseNode(Celula primeiro) throws Exception {
-        // teste de Lista vazia
-        if (primeiro == ultimo) {
-            throw new Exception("Erro (vazia)!");
+        // Teste para lista vazia
+        if (primeiro == null || primeiro.prox == null) {
+            throw new Exception("Erro (lista vazia ou com um único elemento)!");
         }
-        // definir dados
-        Celula ant = null; // recebe nulo
-        Celula at = primeiro.prox; // recebe a primeira da lista
-        Celula dep = primeiro.prox.prox; // recebe a depois do primeiro
-        // andar com celula atuaal e fazer trocas
-        while (at.prox != null) { // chegou na última posição
-            // caso específico para primeira vez
-            if (at == primeiro.prox) {
-                at.prox = null;
-                ant = at; // ant anda para at
-                at = dep; // at anda para dep
-                dep = dep.prox; // dep anda para frente;
-            } else {
-                at.prox = ant; // at aponta para ant
-                ant = at; // ant anda para at
-                at = dep; // at anda para dep
-                dep = dep.prox; // dep anda para frente;
-            }
+
+        // Definir ponteiros iniciais
+        Celula ant = null;
+        Celula at = primeiro.prox;
+        Celula dep;
+
+        // Loop para inverter os ponteiros
+        while (at != null) {
+            dep = at.prox; // Salvar próxima célula
+            at.prox = ant; // Inverter ponteiro
+            ant = at; // Avançar ant
+            at = dep; // Avançar at para o próximo nó
         }
-        // apontar cabeça para o fim
-        primeiro = at; // aponta para ultima celula
-        // return
+
+        // Redefinir o início da lista para o novo primeiro nó
+        primeiro.prox = ant;
+
         return primeiro;
     }
+
 }
