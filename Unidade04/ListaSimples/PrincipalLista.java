@@ -21,10 +21,18 @@ class PrincipalLista {
             System.out.print("Apos insercoes: ");
             lista.mostrar();
 
-            Celula meio = lista.MiddleNode(lista.primeiro);
-            System.out.print("meio.elemento : " + meio.elemento);
+            Celula invertido = lista.ReverseNode(lista.primeiro);
+            lista.mostrar();
         } catch (Exception erro) {
             System.out.println(erro.getMessage());
         }
     }
 }
+
+/**
+ * TESTES -
+ * 
+ * @version 1 - Middle Node
+ *          Celula meio = lista.MiddleNode(lista.primeiro);
+ *          System.out.print("meio.elemento : " + meio.elemento);
+ */

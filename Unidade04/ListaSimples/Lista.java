@@ -264,4 +264,55 @@ class Lista {
         // retornar
         return meio;
     }
+
+    /**
+     * Metódo de ReverseNode
+     * 
+     * Objetivo: inverter a lista flexível.
+     * 
+     * Como: vamos inverter o fluxo de ponteiros. Vamos receber o nó cabeça,
+     * inicializar 03 ponteiros, e ir andando com o principal e fazendo ele apontar
+     * para o anterior, vamos ter outro que vamos usar para não perder referencia
+     * para lista. Vamos andar com a celula atual de forma iterativa
+     * 
+     * @param Celula primeiro
+     * 
+     * @return Celula primeiro
+     * 
+     * @throws Exception - caso de lista vazia
+     * 
+     * @var Celula ant - anterior
+     * @var Celula at - atual
+     * @var Celula post - posterior
+     * 
+     */
+    public Celula ReverseNode(Celula primeiro) throws Exception {
+        // teste de Lista vazia
+        if (primeiro == ultimo) {
+            throw new Exception("Erro (vazia)!");
+        }
+        // definir dados
+        Celula ant = null; // recebe nulo
+        Celula at = primeiro.prox; // recebe a primeira da lista
+        Celula dep = primeiro.prox.prox; // recebe a depois do primeiro
+        // andar com celula atuaal e fazer trocas
+        while (at.prox != null) { // chegou na última posição
+            // caso específico para primeira vez
+            if (at == primeiro.prox) {
+                at.prox = null;
+                ant = at; // ant anda para at
+                at = dep; // at anda para dep
+                dep = dep.prox; // dep anda para frente;
+            } else {
+                at.prox = ant; // at aponta para ant
+                ant = at; // ant anda para at
+                at = dep; // at anda para dep
+                dep = dep.prox; // dep anda para frente;
+            }
+        }
+        // apontar cabeça para o fim
+        primeiro = at; // aponta para ultima celula
+        // return
+        return primeiro;
+    }
 }
