@@ -52,5 +52,18 @@ class Celula {
 }
 
 public class FiladeArvore {
+    // ---- atributos ---- //
+    FiladeArvore head, tail;
+
+    // ---- Construtor ---- //
+    public FiladeArvore() {
+        this.head = null;
+        this.tail = null;
+    }
+
+    public FiladeArvore(FiladeArvore head, FiladeArvore tail) {
+        this.head = head;
+        this.tail = tail;
+    }
 
 }
