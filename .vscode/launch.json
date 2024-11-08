@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "FiladeArvore",
+      "request": "launch",
+      "mainClass": "Unidade05.FiladeArvore",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
       "name": "Van",
       "request": "launch",
       "mainClass": "Lab.REV02.Van",
