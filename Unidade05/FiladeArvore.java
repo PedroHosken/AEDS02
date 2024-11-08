@@ -4,21 +4,15 @@ package Unidade05;
  * Exercício de Árvore de Lista
  * @author Pedro Hosken - 816561
  * @version 1 - 07/11/2024
- * 
  */
-
-// ---- Dependencias ---- //
-import java.util.*;
 
 /**
  * Classe No e seu construtor
  */
 class No {
-    // ---- atributos ---- //
     public int elemento;
     public No esq, dir;
 
-    // ---- Construtor ---- //
     public No() {
         this.elemento = 0;
         this.dir = this.esq = null;
@@ -28,18 +22,15 @@ class No {
         this.elemento = x;
         this.dir = this.esq = null;
     }
-
 }
 
 /**
  * Classe Celula e seu construtor
  */
 class Celula {
-    // ---- atributos ---- //
     public Celula prox;
     public No raiz;
 
-    // ---- Construtor ---- //
     public Celula() {
         this.prox = null;
         this.raiz = null;
@@ -52,10 +43,8 @@ class Celula {
 }
 
 public class FiladeArvore {
-    // ---- atributos ---- //
     public Celula head, tail;
 
-    // ---- Construtor ---- //
     public FiladeArvore() {
         this.head = null;
         this.tail = null;
@@ -66,172 +55,81 @@ public class FiladeArvore {
     }
 
     /**
-     * Metódo de adicionar na Fila
+     * Método de adicionar na Fila
      * 
-     * Objetivo: adicionar nova celúla na fila, e adicionar os elementos na árvore
-     * 
-     * Como: vamos receber do parametro o valor a ser inserido na estrutura, vamos
-     * verificar se há celúlas presentes, caso não tenham vamos inicializar uma nova
-     * e colocar o elemento como raiz. Caso já exista vamos adicionar o elemnto na
-     * celula apontada pela HEAD, seguindo os padrões da árvore, caso a árvore não
-     * tenham valores, ela será a raiz.
-     * 
-     * @param int elemento
+     * @param elemento
      * @return boolean adi
-     * 
-     * @var Celula nv
-     * @var No nm
-     * @var boolean adi
-     * 
      */
-
     public boolean add(int elemento) {
-        // definir dados
-        boolean adi = false;
-        // teste para caso de estrutura vazia
         if (head == null && tail == null) {
-            // vamos criar nova celula
-            No nm = new No(elemento); // criamos novo no
-            Celula nv = new Celula(nm); // criamos a nova celula apontando para novo nó raiz
-            this.head = this.tail = nv; // apontamos para nova celula criada
-            adi = true; // atualiza adi
-        } else { // estrutura apresenta celulas
-            // vamos inserir na celula apontada pelo HEAD
-            adi = adicionar(this.head.raiz, elemento); // metódo auxiliar para inserção
+            // Inicializa a fila vazia com nova célula e árvore
+            No nm = new No(elemento);
+            Celula nv = new Celula(nm);
+            this.head = this.tail = nv;
+            return true;
+        } else {
+            // Adiciona o elemento na árvore na célula atual
+            return adicionar(this.head.raiz, elemento);
         }
-        // return
-        return adi;
     }
 
     /**
-     * Metódo Adicionar
-     * 
-     * Objetivo: metódo auxiliar para adicionar novos elementos na árvore da celúla
-     * 
-     * Como: seguindo a estrutura do metódo adicionar básico
-     * 
-     * @var No raiz
-     * @var int x
-     * @var boolean ok
-     * 
-     * @param No  raiz
-     * @param int elemento
-     * 
-     * @return ok
-     * 
+     * Método auxiliar para adicionar elementos na árvore da célula
      */
-
     private boolean adicionar(No raiz, int elemento) {
-        // definir dados
-        boolean ok = false;
-        // teste para ver se raiz está vazia
         if (raiz == null) {
             raiz = new No(elemento);
-            ok = true;
-        }
-        // caso de elemento ser maior que raiz.elemento
-        else {
-            if (elemento > raiz.elemento) {
-                return adicionar(raiz.dir, elemento); // recursividade
+            return true;
+        } else if (elemento > raiz.elemento) {
+            if (raiz.dir == null) {
+                raiz.dir = new No(elemento);
+                return true;
+            } else {
+                return adicionar(raiz.dir, elemento); // Chamada recursiva
             }
-            // teste para caso elemento < raiz.elemento
-            else {
-                if (elemento < raiz.elemento) {
-                    return adicionar(raiz.esq, elemento); // recursividade
-                }
-                // caso igual
-                else {
-                    System.out.println("Erro ao adicionar, elementos iguais");
-                    return ok; // finaliza metódo
-                }
+        } else if (elemento < raiz.elemento) {
+            if (raiz.esq == null) {
+                raiz.esq = new No(elemento);
+                return true;
+            } else {
+                return adicionar(raiz.esq, elemento); // Chamada recursiva
             }
+        } else {
+            System.out.println("Erro ao adicionar, elementos iguais");
+            return false; // Não permite duplicados
         }
-        // return
-        return ok;
     }
 
     /**
-     * Metódo de Imprimir
-     * 
-     * Objetivo imprimir a estrutura a partir da raiz de cada Celula
-     * 
-     * Como: vamos passar como parametro a Celula e vamos passar celula por celula
-     * de forma iterativa. Para imprimir vamos utilizar o caminha central.
-     * 
-     * @param Celula i
-     * 
-     * 
+     * Método de Imprimir a fila de árvores
      */
-
-    static void imprimir(Celula i) {
-        // imprimir a árvore presente na celula
-        impAB(i.raiz);
+    static void imprimirFila(FiladeArvore fila) {
+        for (Celula i = fila.head; i != null; i = i.prox) {
+            System.out.print("Árvore na célula: ");
+            impAB(i.raiz); // Imprime a árvore na célula
+            System.out.println();
+        }
     }
 
     /**
-     * Metódo de Imprimir Auxiliar
-     * 
-     * Objetivo imprimir a estrutura a partir da raiz de cada Celula
-     * 
-     * Como: vamos passar como parametro a Celula e vamos passar celula por celula
-     * de forma iterativa. Para imprimir vamos utilizar o caminha central.
-     * 
-     * @param No raiz
-     * 
+     * Método de Impressão Auxiliar da árvore na célula
      */
-
     static void impAB(No raiz) {
-        // metódo de caminha central Esq->No->Dir
-        if (raiz != null) { // teste para caso vazio
-            impAB(raiz.esq); // esquerda
-            System.out.println(raiz.elemento);
+        if (raiz != null) {
+            impAB(raiz.esq);
+            System.out.print(raiz.elemento + " ");
             impAB(raiz.dir);
         }
-
     }
-
-    /**
-     * Metódo Principal
-     * 
-     * 4.a) Adicionar novo elemento na estrutura
-     * 4.b) Retornar elemento de maior valor na estrutura
-     * 
-     * @var Celula i
-     * @var No x
-     * @var FiladeArvore BST
-     * 
-     * @version 4.a)
-     *          1 - Testar construtores de cada classe e imprimir - OK
-     *          2 - Chamar metódo add e imprimir a estrutura
-     * @param args
-     */
 
     public static void main(String[] args) {
-        // definir dados
-        FiladeArvore BST = new FiladeArvore();
-        // chamar metódo de adicionar na árvore
-        BST.add(10); // teste de adicionar elemento sem células - OK
-        BST.add(20);
-        BST.add(30);        
-        for (Celula i = BST.head; i != null; i = i.prox) {
-            imprimir(i);
-        }
+        FiladeArvore fila = new FiladeArvore();
+        fila.add(10);
+        fila.add(20);
+        fila.add(5);
+        fila.add(15);
 
-
+        // Imprime a fila de árvores
+        imprimirFila(fila);
     }
-
-    /**
-     * TESTES
-     * 
-     * @version 1 -
-     *          No x = new No(5);
-     *          Celula i = new Celula(x);
-     *          FiladeArvore BST = new FiladeArvore(i);
-     *          // Imprimir
-     *          System.out.println(BST.head.raiz.elemento);
-     * @version 2 -
-     * 
-     * 
-     */
-
 }
