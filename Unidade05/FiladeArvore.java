@@ -122,14 +122,58 @@ public class FiladeArvore {
         }
     }
 
+    /**
+     * Metódo getMaior
+     * 
+     * Objetivo: retornar elemento de maior valor da estrutura
+     * 
+     * Como: vamos percorrer a estrutura, cada celula, comparar elementos de cada
+     * árvore, visando seu lado direito, guardar váriavele comparar com as árvores
+     * de outras células. Vamos percorrer cada celula iterativamente, por for. Vamos
+     * percorrer cada árvore visando seu lado da direita
+     * 
+     * @param Celula head
+     * 
+     * @return int
+     * 
+     * @var int M
+     * 
+     */
+
+    public int getMaior(Celula head) {
+        if (head == null) {
+            System.out.println("Estrutura Vazia");
+            return 0;
+        } else {
+            // definir dados
+            int M = 0;
+            // percorrer celulas
+            for (Celula i = head; i != null; i = i.prox) {
+                // percorrer árvore de cada celula
+                for (No x = i.raiz; x != null; x = x.dir) {
+                    if (M < x.elemento) {
+                        M = x.elemento;
+                    }
+                }
+            }
+            // return
+            return M;
+        }
+    }
+
     public static void main(String[] args) {
         FiladeArvore fila = new FiladeArvore();
         fila.add(10);
         fila.add(20);
         fila.add(5);
         fila.add(15);
+        fila.add(8);
+        fila.add(100);
 
         // Imprime a fila de árvores
         imprimirFila(fila);
+        // Maior elemento da estrutura
+        int x = fila.getMaior(fila.head);
+        System.out.println(x);
     }
 }
