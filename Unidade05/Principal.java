@@ -14,5 +14,7 @@ public class Principal {
             System.out.print("\t Altura: " + arvoreBinaria.getAltura());
             System.out.println("\t log(2): " + Math.log(i) / Math.log(2));
         }
+
+        arvoreBinaria.pNivel(arvoreBinaria.raiz);
     }
 }

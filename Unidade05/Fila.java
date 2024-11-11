@@ -5,7 +5,6 @@ package Unidade05;
  * 
  * @author Max do Val Machado
  * @version 2 01/2015
- * 
  */
 
 public class Fila {

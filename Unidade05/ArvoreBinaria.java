@@ -6,7 +6,7 @@ package Unidade05;
  * @author Max do Val Machado
  */
 public class ArvoreBinaria {
-    private No raiz; // Raiz da arvore.
+    public No raiz; // Raiz da arvore.
 
     /**
      * Construtor da classe.
@@ -435,16 +435,40 @@ public class ArvoreBinaria {
      * Este processo continua até que a fila esteja vazia, o que indica que todos os
      * nós foram processados.
      * 
-     * @var Celula inicio, fim - FILA
+     * @var Fila elem - Fila de elementos da lista
+     * @var int remov - inteiro que recebe removido
      * 
-     * @version 1 - criar fila e armazenar valores nela
+     * @throws Exception
+     * 
+     * @version 1 - criar fila e armazenar valores nela e remover
      * 
      */
 
-     
+    public void pNivel(No raiz) throws Exception {
+        // definir dados
+        Fila elem = new Fila(); // inicializa Fila
+        int remov = 0;
+        // inserir Nó raiz na fila
+        elem.inserir(raiz.elemento);
+        while (elem != null) {
+            remov = elem.remover(); // recebemos o valor
+            System.out.println(remov); // printamos o valor
+            if (raiz.esq != null) {
+                elem.inserir(raiz.esq.elemento); // insere elemento do filho da esquerda
+            } else {
+                if (raiz.dir != null) {
+                    elem.inserir(raiz.esq.elemento); // insere elemento do filho da direita
+                }
+
+            }
+            pNivel(raiz.esq); // percorre o lado da esquerda
+            pNivel(raiz.dir); // percorre o lado da direita
+        }
+
+    }
 
     /**
-     * TESTES - 
+     * TESTES -
      * 
      * @version 1 -
      * 
