@@ -8,11 +8,11 @@ package Unidade05;
 public class Principal {
     public static void main(String[] args) throws Exception {
         ArvoreBinaria arvoreBinaria = new ArvoreBinaria();
-        for (int i = 1; i < 30; i++) {
+        for (int i = 1; i < 10; i++) {
             arvoreBinaria.inserir(i);
-            System.out.print("No. nos: " + i);
-            System.out.print("\t Altura: " + arvoreBinaria.getAltura());
-            System.out.println("\t log(2): " + Math.log(i) / Math.log(2));
+            // System.out.print("No. nos: " + i);
+            // System.out.print("\t Altura: " + arvoreBinaria.getAltura());
+            // System.out.println("\t log(2): " + Math.log(i) / Math.log(2));
         }
 
         arvoreBinaria.pNivel(arvoreBinaria.raiz);

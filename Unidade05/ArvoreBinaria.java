@@ -445,26 +445,32 @@ public class ArvoreBinaria {
      */
 
     public void pNivel(No raiz) throws Exception {
-        // definir dados
-        Fila elem = new Fila(); // inicializa Fila
-        int remov = 0;
-        // inserir Nó raiz na fila
-        elem.inserir(raiz.elemento);
-        while (elem != null) {
-            remov = elem.remover(); // recebemos o valor
-            System.out.println(remov); // printamos o valor
-            if (raiz.esq != null) {
-                elem.inserir(raiz.esq.elemento); // insere elemento do filho da esquerda
-            } else {
-                if (raiz.dir != null) {
-                    elem.inserir(raiz.esq.elemento); // insere elemento do filho da direita
+        System.out.println("entrou");
+        if (raiz == null) {
+            System.out.println("vazia");
+            return; // Se a árvore estiver vazia
+        } else {
+
+            // Criação da fila e inserção do nó raiz
+            Fila elem = new Fila(); // Supondo que sua classe Fila esteja pronta para lidar com objetos No
+            elem.inserir(raiz.elemento);
+
+            while (elem.isEmpty() != false) {
+                //System.out.println("entrou2");
+                int atual = elem.remover(); // Remove o próximo nó da fila
+
+                // Processa o valor do nó atual
+                System.out.println(atual);
+
+                // Inserir os filhos do nó atual na fila, primeiro o esquerdo depois o direito
+                if (raiz.esq != null) {
+                    elem.inserir(raiz.esq.elemento);
                 }
-
+                if (raiz.dir != null) {
+                    elem.inserir(raiz.dir.elemento);
+                }
             }
-            pNivel(raiz.esq); // percorre o lado da esquerda
-            pNivel(raiz.dir); // percorre o lado da direita
         }
-
     }
 
     /**

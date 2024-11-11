@@ -60,4 +60,15 @@ public class Fila {
 
         System.out.println("] ");
     }
+
+    public boolean isEmpty() {
+        // definir dados
+        boolean is = true;
+        // teste
+        if (primeiro == ultimo) {
+            is = false;
+        }
+        // return
+        return is;
+    }
 }
