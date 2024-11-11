@@ -1,5 +1,7 @@
 package Unidade04.ListaSimples;
 
+import Unidade05.Celula;
+
 /**
  * Lista simples dinamica
  * 

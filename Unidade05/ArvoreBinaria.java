@@ -423,4 +423,32 @@ public class ArvoreBinaria {
         }
         return resp;
     }
+
+    /**
+     * Metódo pNível
+     * 
+     * Objetivo: percorrer a árvore por cada nível
+     * 
+     * Como: Primeiro, insere-se o nó raiz na fila.
+     * Depois, para cada nó, remove-se o nó da frente da fila, processa-se seu valor
+     * e insere-se seus filhos (esquerdo e direito, se existirem) no final da fila.
+     * Este processo continua até que a fila esteja vazia, o que indica que todos os
+     * nós foram processados.
+     * 
+     * @var Celula inicio, fim - FILA
+     * 
+     * @version 1 - criar fila e armazenar valores nela
+     * 
+     */
+
+     
+
+    /**
+     * TESTES - 
+     * 
+     * @version 1 -
+     * 
+     * 
+     * 
+     */
 }
