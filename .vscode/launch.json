@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "PrincipalPilha",
+      "request": "launch",
+      "mainClass": "Unidade05.PrincipalPilha",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
       "name": "Principal",
       "request": "launch",
       "mainClass": "Unidade05.Principal",

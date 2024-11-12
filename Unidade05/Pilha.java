@@ -23,13 +23,23 @@ public class Pilha {
      * @param x int elemento a inserir.
      */
     public void inserir(int x) {
-        Celula tmp = new Celula(x);
-        tmp.prox = topo;
-        topo = tmp;
-        tmp = null;
-        // atualizar ponteiro m
-        if (x < m.elemento) {
-            m = topo; // atualiza para celula que acabou de ser inserida
+        // caso de pilha vazia
+        if (topo == null) {
+            Celula tmp = new Celula(x);
+            tmp.prox = topo;
+            topo = tmp;
+            tmp = null;
+            m = topo; // atualiza ponteiro m
+
+        } else { // caso já existam celulas na pilha
+            Celula tmp = new Celula(x);
+            tmp.prox = topo;
+            topo = tmp;
+            tmp = null;
+            // atualizar ponteiro m
+            if (x < m.elemento) {
+                m = topo; // atualiza para celula que acabou de ser inserida
+            }
         }
     }
 
