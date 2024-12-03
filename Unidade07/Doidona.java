@@ -73,17 +73,62 @@ public class Doidona {
 
     // Metódos de Hash
 
-    public int hashT1(int elemento){
-   }
+    public int hashT1(int elemento) {
+        return elemento % TAM1; // retorna o elemento dividido pelo tamanho da Hash
+    }
 
-   public int hashT2(int elemento){
-   }
+    public int hashT2(int elemento) {
+        return elemento % 3; // area de reserva destinada a T2
+    }
 
-   public int hashT3(int elemento){
-   }
+    public int hashT3(int elemento) {
+        return elemento % TAM3; // retorna o elemento dividido pelo tamanho da Hash
+    }
 
-   public int rehashT3(int elemento){
-   }
+    public int rehashT3(int elemento) {
+        return (elemento + 1) % TAM3; // retorna o elemento dividido pelo tamanho da Hash
+    }
 
+    /**
+     * Metódo de Inserir
+     * 
+     * Objetivo: inserir na estrtura doidona
+     * 
+     * Como: Vamos realizar a transformação do elemento para h1, caso colisão, vai
+     * para T2. T2 transforma o elemento, o que vai direcioná-lo para sua estrtura
+     * correta, seja T3, lista flexível, ou árvore binária. Em T3, caso colida vai
+     * para área de reserva que é uma árvore binária
+     * 
+     * @param int elemento
+     * 
+     * @var int [] h1
+     * @var int [] h3
+     * @var No raiz T2
+     * @var No raiz T3
+     * @var Celula primeiroT2
+     * @var Celula ultimoT2
+     * @var aux
+     */
+
+    public void inserir(int elemento) {
+        // definir dados
+        int aux = 0;
+        // transformar em h1
+        aux = hashT1(elemento);
+        // teste de posição em h1
+        if (h1[aux] == NULO) { // caso vazio
+            h1[aux] = elemento;
+        } else { // esta ocupado
+            aux = hashT2(elemento);
+            if (aux == 1) { // vai pra T3
+
+            } else if (aux == 2) { // lista encadeada
+
+            } else { // arvore bináriaclear
+                
+
+            }
+        }
+    }
 
 }
