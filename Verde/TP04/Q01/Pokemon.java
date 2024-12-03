@@ -1018,7 +1018,8 @@ public class Pokemon {
             }
             linha = sc.nextLine();
         }
-        // imprimir arvore pelo caminhar central
+        // imprimir arvore pelo caminhar
+
         // fechar scanner
         sc.close();
 
