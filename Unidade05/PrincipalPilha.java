@@ -11,7 +11,7 @@ public class PrincipalPilha {
         try {
             System.out.println(" ==== PILHA FLEXIVEL ====");
             Pilha pilha = new Pilha();
-            int x1, x2, x3, x4, x5, x6;
+            int x1, x2, x3;
 
             pilha.inserir(100);
             pilha.inserir(101);
