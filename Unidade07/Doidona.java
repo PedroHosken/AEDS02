@@ -121,17 +121,53 @@ class Lista {
         this.primeiro = this.ultimo = tmp;
     }
 
-    // metodo de inserir
-    public void inserir(int x){
-        //teste para caso lista vazia
-        if(primeiro == ultimo){
+    // metodo de inserir no fim
+    public void inserir(int x) {
+        // teste para caso lista vazia
+        if (primeiro == ultimo) {
             Celula tmp = new Celula(x);
             ultimo = tmp;
             primeiro.prox = ultimo;
+        } else {
+            Celula tmp = new Celula(x);
+            ultimo.prox = tmp;
+            ultimo = tmp;
         }
     }
+
     // metodo de pesquisar
-    // metodo de remover
+    public boolean pesq(int x) {
+        // definir dados
+        boolean is = false;
+        // pesquisar
+        for (Celula i = this.primeiro.prox; i.prox != null; i = i.prox) {
+            if (i.val == x) {
+                is = true;
+            }
+        }
+        // retornar
+        return is;
+    }
+
+    // metodo de remover no final tambem
+    public int remover(int x) {
+        // definir dados
+        int y = 0;
+        // teste para caso lista vazia
+        if (primeiro == ultimo) {
+            System.out.println("Lista está vazia");
+        } else {
+            Celula tmp;
+            for (tmp = this.primeiro.prox; tmp.prox != ultimo; tmp = tmp.prox)
+                ;
+            y = ultimo.val;
+            tmp.prox = null;
+            ultimo = tmp;
+
+        }
+        // retornar
+        return y;
+    }
 }
 
 public class Doidona {
