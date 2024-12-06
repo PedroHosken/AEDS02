@@ -86,7 +86,9 @@ class Ab {
         // definir dados
         boolean is = false;
         // realizar pesquisar
-        if (raiz.val == x) {
+        if (raiz == null) {
+            is = false;
+        } else if (raiz.val == x) {
             is = true;
         } else if (x > raiz.val) {
             pesq(x, raiz.dir);
@@ -103,7 +105,74 @@ class Ab {
         System.out.println(raiz.val);
         caminharCentral(raiz.dir);
     }
-    // metodo de remover
+
+    /**
+     * Metodo publico iterativo para remover elemento.
+     * 
+     * @param x Elemento a ser removido.
+     * @throws Exception Se nao encontrar elemento.
+     */
+    public void remover2(int x) throws Exception {
+        if (raiz == null) {
+            throw new Exception("Erro ao remover2!");
+        } else if (x < raiz.val) {
+            remover2(x, raiz.esq, raiz);
+        } else if (x > raiz.val) {
+            remover2(x, raiz.dir, raiz);
+        } else if (raiz.dir == null) {
+            raiz = raiz.esq;
+        } else if (raiz.esq == null) {
+            raiz = raiz.dir;
+        } else {
+            raiz.esq = maiorEsq(raiz, raiz.esq);
+        }
+    }
+
+    /**
+     * Metodo privado recursivo para remover val.
+     * 
+     * @param x   val a ser removido.
+     * @param i   No em analise.
+     * @param pai do No em analise.
+     * @throws Exception Se nao encontrar val.
+     */
+    private void remover2(int x, No i, No pai) throws Exception {
+        if (i == null) {
+            throw new Exception("Erro ao remover2!");
+        } else if (x < i.val) {
+            remover2(x, i.esq, i);
+        } else if (x > i.val) {
+            remover2(x, i.dir, i);
+        } else if (i.dir == null) {
+            pai = i.esq;
+        } else if (i.esq == null) {
+            pai = i.dir;
+        } else {
+            i.esq = maiorEsq(i, i.esq);
+        }
+    }
+
+    /**
+     * Metodo para trocar o elemento "removido" pelo maior da esquerda.
+     * 
+     * @param i No que teve o elemento removido.
+     * @param j No da subarvore esquerda.
+     * @return No em analise, alterado ou nao.
+     */
+    private No maiorEsq(No i, No j) {
+
+        // Encontrou o maximo da subarvore esquerda.
+        if (j.dir == null) {
+            i.val = j.val; // Substitui i por j.
+            j = j.esq; // Substitui j por j.ESQ.
+
+            // Existe no a direita.
+        } else {
+            // Caminha para direita.
+            j.dir = maiorEsq(i, j.dir);
+        }
+        return j;
+    }
 }
 
 /**
@@ -180,9 +249,10 @@ public class Doidona {
     int[] h1;
     int[] h3;
 
-    // inicializa as estruturas
-    Celula primeiroT2, ultimoT2; // lista em T2
-    No raizT2, raizT3; // raiz T2 e raiz T3
+    // definir estruturas
+    Ab ab3;
+    Lista lista;
+    Ab ab2;
 
     // construtor padrão da Doidona
     public Doidona() {
@@ -197,10 +267,11 @@ public class Doidona {
             h3[i] = NULO;
         }
 
-        // inicializa as células
-        primeiroT2 = ultimoT2 = null;
-        // inicializa os nós
-        raizT2 = raizT3 = null;
+        // inicializa as árvores
+        ab3 = new Ab();
+        ab2 = new Ab();
+        // inicializa a Lista
+        lista = new Lista();
     }
 
     // Metódos de Hash
@@ -258,13 +329,13 @@ public class Doidona {
                     h3[aux] = elemento;
                 } else { // está ocupado aquela posição
                     // inserir na árvore apontada pela raiz T3
-                    Ab3.inserir(elemento); // insere na árvore da raiz 3
+                    ab3.inserir(elemento, ab3.raiz); // insere na árvore da raiz 3
                 }
             } else if (aux == 2) { // lista encadeada
                 lista.inserir(elemento); // insere o elemento na lista
 
             } else { // arvore binária
-                Ab2.inserir(elemento); // insere o elemento na árvore de raiz 2
+                ab2.inserir(elemento, ab2.raiz); // insere o elemento na árvore de raiz 2
             }
         }
     }
