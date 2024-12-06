@@ -38,7 +38,43 @@ class No {
     }
 }
 
+/**
+ * Estrutura do Árvore, construtores e metódos
+ */
+class Ab {
+    // atributos
+    public int val;
+    public No raiz;
 
+    // construtor padrão
+    public Ab() {
+        this.val = 0;
+        this.raiz = null;
+    }
+    // metodo de inserir
+    // metodo de pesquisar
+    // metodo de caminhar
+    // metodo de remover
+}
+
+/**
+ * Estrutura da Lista
+ */
+class Lista {
+    // atributos
+    public int val;
+    public Celula primeiro, ultimo;
+
+    // construtor padrão
+    public Lista() {
+        this.val = 0;
+        this.primeiro = this.ultimo = null;
+    }
+    // metodo de inserir
+    // metodo de pesquisar
+    // metodo de caminhar
+    // metodo de remover
+}
 
 public class Doidona {
     // atributos globais
