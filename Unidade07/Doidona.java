@@ -38,6 +38,8 @@ class No {
     }
 }
 
+
+
 public class Doidona {
     // atributos globais
     final int TAM1 = 10; // tamanho da hash1
@@ -117,16 +119,22 @@ public class Doidona {
         aux = hashT1(elemento);
         // teste de posição em h1
         if (h1[aux] == NULO) { // caso vazio
-            h1[aux] = elemento;
+            h1[aux] = elemento; // insere naquela posição
         } else { // esta ocupado
-            aux = hashT2(elemento);
+            aux = hashT2(elemento); // retorno do valor da posição na Hash
             if (aux == 1) { // vai pra T3
-
+                aux = hashT3(elemento);
+                if (h3[aux] == NULO) { // caso de posição válida, insere
+                    h3[aux] = elemento;
+                } else { // está ocupado aquela posição
+                    // inserir na árvore apontada pela raiz T3
+                    Ab3.inserir(elemento); // insere na árvore da raiz 3
+                }
             } else if (aux == 2) { // lista encadeada
+                lista.inserir(elemento); // insere o elemento na lista
 
-            } else { // arvore bináriaclear
-                
-
+            } else { // arvore binária
+                Ab2.inserir(elemento); // insere o elemento na árvore de raiz 2
             }
         }
     }
