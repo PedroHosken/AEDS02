@@ -4,7 +4,7 @@ package Unidade07;
  * Implementação da Doidona sem TADS
  * 
  * @author Pedro Hosken -816561
- * @version 1.0 - 03/12/2024
+ * @version 2.0 - 06/12/2024
  * 
  */
 
@@ -19,6 +19,12 @@ class Celula {
     // construtor padrão
     public Celula() {
         this.val = 0;
+        this.prox = null;
+    }
+
+    // construtor padrão
+    public Celula(int x) {
+        this.val = x;
         this.prox = null;
     }
 }
@@ -36,6 +42,12 @@ class No {
         this.val = 0;
         this.dir = this.esq = null;
     }
+
+    // construtor com passagem de valor
+    public No(int x) {
+        this.val = x;
+        this.dir = this.esq = null;
+    }
 }
 
 /**
@@ -51,9 +63,46 @@ class Ab {
         this.val = 0;
         this.raiz = null;
     }
+
     // metodo de inserir
+    public void inserir(int x, No raiz) {
+        // teste para se raiz é nula
+        if (raiz == null) {
+            No nv = new No(x);
+            raiz = nv; // aponta raiz para nv
+        } else if (x > raiz.val) {
+            inserir(x, raiz.dir);
+        } else if (x < raiz.val) {
+            inserir(x, raiz.esq);
+        } else {
+            // casos igual
+            System.out.println("Não inserimos valores iguais");
+        }
+
+    }
+
     // metodo de pesquisar
-    // metodo de caminhar
+    public boolean pesq(int x, No raiz) {
+        // definir dados
+        boolean is = false;
+        // realizar pesquisar
+        if (raiz.val == x) {
+            is = true;
+        } else if (x > raiz.val) {
+            pesq(x, raiz.dir);
+        } else {
+            pesq(x, raiz.esq);
+        }
+        // retornar
+        return is;
+    }
+
+    // metodo de caminhar central
+    public void caminharCentral(No raiz) {
+        caminharCentral(raiz.esq);
+        System.out.println(raiz.val);
+        caminharCentral(raiz.dir);
+    }
     // metodo de remover
 }
 
@@ -68,11 +117,20 @@ class Lista {
     // construtor padrão
     public Lista() {
         this.val = 0;
-        this.primeiro = this.ultimo = null;
+        Celula tmp = new Celula();
+        this.primeiro = this.ultimo = tmp;
     }
+
     // metodo de inserir
+    public void inserir(int x){
+        //teste para caso lista vazia
+        if(primeiro == ultimo){
+            Celula tmp = new Celula(x);
+            ultimo = tmp;
+            primeiro.prox = ultimo;
+        }
+    }
     // metodo de pesquisar
-    // metodo de caminhar
     // metodo de remover
 }
 
