@@ -340,4 +340,62 @@ public class Doidona {
         }
     }
 
+    /**
+     * Metodo Pesquisar
+     * 
+     * Objetivo : Pesquisar por determinado valor na estrtura re retornar se ele
+     * existe ou não
+     * 
+     * Como: Vamos fazer o processo de transformação do valor para primeira hash,
+     * depois vamos seguindo seu caminho até encontrar, caso não tenha retornar
+     * falso. Precisamos analisar se o valor daquela posição é o nosso valor, se
+     * aquela posição está ocupada por outro valo0r e precisamos continuar a
+     * pesquisa, ou se aquela posição está vazia e o valor não se encontra na
+     * estrtura.
+     * 
+     * 
+     * @param int elemento
+     * @return boolean is
+     * 
+     * @var boolean is
+     * @var int aux
+     * 
+     */
+    public boolean pesq(int elemento) {
+        // definir dados
+        boolean is = false;
+        int aux = 0;
+        // ver na Hash 01
+        aux = hashT1(elemento);
+        if (h1[aux] == NULO) { // caso de vazio
+            is = false;
+            System.out.println("Valor não encontrado");
+        } else if (h1[aux] == elemento) { // caso de posição estar com valor
+            is = true;
+            System.out.println("Valor encontrado");
+        } else { // caso daquela posição estar ocupada
+            // avançar para área de reserva
+            aux = hashT2(elemento);
+            if (aux == 1) { // vai para Hash 03
+                aux = hashT3(elemento);
+                // teste se está dentro da hash
+                if (h3[aux] == NULO) { // posição vazia
+                    is = false;
+                    System.out.println("Não está na hash03");
+                } else if (h3[aux] == elemento) { // elemento encontrado
+                    is = true;
+                    System.out.println("Valor encontrado na hash03");
+                } else {
+                    is = ab3.pesq(elemento, ab3.raiz);
+                }
+            } else if (aux == 2) { // vai para lista
+                is = lista.pesq(elemento);
+            } else {
+                is = ab2.pesq(elemento, ab2.raiz);
+            }
+        }
+        // retornar
+        return is;
+    }
+
 }
