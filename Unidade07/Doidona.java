@@ -246,8 +246,8 @@ public class Doidona {
     final int NULO = -0x7FFFFF; // valor nulo
 
     // inicializa as tabelas hash
-    int[] h1;
-    int[] h3;
+    static int[] h1;
+    static int[] h3;
 
     // definir estruturas
     Ab ab3;
@@ -323,7 +323,7 @@ public class Doidona {
             h1[aux] = elemento; // insere naquela posição
         } else { // esta ocupado
             aux = hashT2(elemento); // retorno do valor da posição na Hash
-            if (aux == 1) { // vai pra T3
+            if (aux == 0) { // vai pra T3
                 aux = hashT3(elemento);
                 if (h3[aux] == NULO) { // caso de posição válida, insere
                     h3[aux] = elemento;
@@ -331,7 +331,7 @@ public class Doidona {
                     // inserir na árvore apontada pela raiz T3
                     ab3.inserir(elemento, ab3.raiz); // insere na árvore da raiz 3
                 }
-            } else if (aux == 2) { // lista encadeada
+            } else if (aux == 1) { // lista encadeada
                 lista.inserir(elemento); // insere o elemento na lista
 
             } else { // arvore binária
@@ -376,7 +376,7 @@ public class Doidona {
         } else { // caso daquela posição estar ocupada
             // avançar para área de reserva
             aux = hashT2(elemento);
-            if (aux == 1) { // vai para Hash 03
+            if (aux == 0) { // vai para Hash 03
                 aux = hashT3(elemento);
                 // teste se está dentro da hash
                 if (h3[aux] == NULO) { // posição vazia
@@ -388,7 +388,7 @@ public class Doidona {
                 } else {
                     is = ab3.pesq(elemento, ab3.raiz);
                 }
-            } else if (aux == 2) { // vai para lista
+            } else if (aux == 1) { // vai para lista
                 is = lista.pesq(elemento);
             } else {
                 is = ab2.pesq(elemento, ab2.raiz);
@@ -397,5 +397,33 @@ public class Doidona {
         // retornar
         return is;
     }
+
+    /**
+     * Metódo Main
+     * 
+     * Objetivo: Testar os metódos da estrutra doidona
+     * Como: Vamos iniciar sua estrtura e chamar os metódos de construtor, inserir,
+     * pesquisar
+     * 
+     * @version 1 - testar construtor - OK
+     * @version 2 - inserir dados - Mais ou menos...
+     * @var Doidona doidona
+     */
+    public static void main(String args[]) {
+        // definir dados
+        Doidona doidona = new Doidona();
+        // inserir dados na doidona
+        doidona.inserir(3); // posição 3 % 10
+        System.out.println(h1[3]);
+        doidona.inserir(2);
+        System.out.println(h1[2]);
+        doidona.inserir(5);
+        System.out.println(h1[5]);
+    }
+
+    /**
+     * TESTES
+     * 
+     */
 
 }

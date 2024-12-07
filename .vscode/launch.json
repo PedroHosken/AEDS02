@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Doidona",
+      "request": "launch",
+      "mainClass": "Unidade07.Doidona",
+      "projectName": "AEDS02_b22653b1"
+    },
+    {
+      "type": "java",
       "name": "Pokemon",
       "request": "launch",
       "mainClass": "Verde.TP04.Q01.Pokemon",
